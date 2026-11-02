@@ -1,0 +1,81 @@
+{
+    "$comment": "Listing metadata, applied by scripts/store-metadata.mjs in CI (manager/rules/SEO.md). actorId is added after the first deploy.",
+    "seoTitle": "Greenhouse Jobs Scraper - Every Greenhouse Job Board",
+    "seoDescription": "Search every company on Greenhouse at once: job titles, pay ranges, locations, remote work and posting dates. Read live, no login or Greenhouse API key.",
+    "exampleRunInput": {
+        "searchTerms": [
+            "software engineer"
+        ]
+    },
+    "actorPermissionLevel": "LIMITED_PERMISSIONS",
+    "isPublic": false,
+    "defaultRunOptions": {
+        "build": "latest",
+        "memoryMbytes": 2048,
+        "timeoutSecs": 1800
+    },
+    "defaultRunOptions$comment": "TODO_DEPLOYED: measure the empty form {\"maxJobs\":100} at 1024 and 2048 MB on the deployed build (seconds, usageTotalUsd, run ids) and keep the cheaper size that finishes well inside 300 s. 2 GB until then: on the laptop a description search peaked at 0.97 GB (32 description lists at once, which is what the adapter reads at 2 GB) and 0.63 GB at the 1 GB setting (16 at once); a plain pass peaked at 363 MB (b-example, 2026-11-02).",
+    "pricing": {
+        "$comment": "2026-11-02. Rule: rules/SEO.md section 16. Main competitor: fantastic-jobs/greenhouse-jobs-api, the most used actor made for Greenhouse (156 u30): $0.002 a job on FREE and BRONZE, $0.0012 on SILVER and above, no start fee, one row with the description from its own database. job is 10% under it and job-details 5% under it on FREE and BRONZE. Others: bovi $0.0015 + $0.00005 start (company slugs), yugenox $0.002 (live keyword search, Greenhouse, Lever and Ashby), bytepulselabs $0.002 (board links), automation-lab $0.002 + $0.01 start, jobo.world $0.004 (database). No start fee: a search reads every board, about $0.011-0.013 of compute at 2 GB (estimate from the siblings' $0.0001 a second, TODO_DEPLOYED), 6-7% of the $0.18 that 100 rows earn, under the 10% rule. Gentle ladder per the owner's decision of 2026-10-29.",
+        "apply": true,
+        "pricingInfos": [
+            {
+                "pricingModel": "PAY_PER_EVENT",
+                "reasonForChange": "First pricing",
+                "pricingPerEvent": {
+                    "actorChargeEvents": {
+                        "job": {
+                            "eventTitle": "Job",
+                            "eventDescription": "One saved job row: title, company, locations, work type, job type, pay, posting date, deadline, job link. Also one checked job link that is closed or not found.",
+                            "isPrimaryEvent": true,
+                            "eventTieredPricingUsd": {
+                                "FREE": {
+                                    "tieredEventPriceUsd": 0.0018
+                                },
+                                "BRONZE": {
+                                    "tieredEventPriceUsd": 0.0018
+                                },
+                                "SILVER": {
+                                    "tieredEventPriceUsd": 0.00162
+                                },
+                                "GOLD": {
+                                    "tieredEventPriceUsd": 0.00144
+                                },
+                                "PLATINUM": {
+                                    "tieredEventPriceUsd": 0.00144
+                                },
+                                "DIAMOND": {
+                                    "tieredEventPriceUsd": 0.00144
+                                }
+                            }
+                        },
+                        "job-details": {
+                            "eventTitle": "Job with details",
+                            "eventDescription": "One saved job row with full details on: everything in a Job row plus the description as text and HTML, the department, the company's reference number and pay as numbers with its currency.",
+                            "eventTieredPricingUsd": {
+                                "FREE": {
+                                    "tieredEventPriceUsd": 0.0019
+                                },
+                                "BRONZE": {
+                                    "tieredEventPriceUsd": 0.0019
+                                },
+                                "SILVER": {
+                                    "tieredEventPriceUsd": 0.00171
+                                },
+                                "GOLD": {
+                                    "tieredEventPriceUsd": 0.00152
+                                },
+                                "PLATINUM": {
+                                    "tieredEventPriceUsd": 0.00152
+                                },
+                                "DIAMOND": {
+                                    "tieredEventPriceUsd": 0.00152
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

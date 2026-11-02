@@ -1,0 +1,114 @@
+{
+    "$comment": "Example tasks published on the Store by scripts/publish-tasks.mjs after every deploy (CI only). Each one is a search people type, with its own Google-indexed landing page and .md (manager/rules/SEO.md section 18). Limits: title 63, description 400, seoTitle 60, seoDescription 160 (154 kept), 10 per actor. inputSchemaFields must stay fields of the input schema, or the page stops showing after a build. options follow defaultRunOptions in store.json (TODO_DEPLOYED: the memory measured on Apify goes in both).",
+    "options": {
+        "build": "latest",
+        "memoryMbytes": 2048,
+        "timeoutSecs": 1800
+    },
+    "tasks": [
+        {
+            "name": "greenhouse-jobs-last-24-hours",
+            "title": "Find every Greenhouse job posted in the last 24 hours",
+            "description": "Get every job that companies on Greenhouse first published in the last day, newest first, with the company, location, pay when shown, and link. An edit to an old job does not count as new. Schedule it daily for a fresh feed of jobs.",
+            "input": {
+                "postedWithin": "24 hours",
+                "maxJobs": 100
+            },
+            "seoTitle": "New Greenhouse Jobs in the Last 24 Hours",
+            "seoDescription": "Every job first published on Greenhouse job boards in the last day, newest first, with company, location, pay and link. Run it daily for a fresh feed.",
+            "inputSchemaFields": ["searchTerms", "location", "workType", "postedWithin", "maxJobs"],
+            "datasetView": "jobs"
+        },
+        {
+            "name": "remote-jobs-on-greenhouse",
+            "title": "Find remote jobs on Greenhouse job boards",
+            "description": "Get the newest remote jobs from every company on Greenhouse, with the company, location, pay when shown, posting date and link. Remote is what the company states in its own job fields, or in the location or title.",
+            "input": {
+                "workType": ["remote"],
+                "maxJobs": 100
+            },
+            "seoTitle": "Remote Jobs on Greenhouse Job Boards",
+            "seoDescription": "Search every company on Greenhouse for remote jobs at once, newest first, with company, pay, posting date and link. No login or API key needed.",
+            "inputSchemaFields": ["searchTerms", "location", "workType", "employmentType", "postedWithin", "maxJobs"],
+            "datasetView": "jobs"
+        },
+        {
+            "name": "software-engineer-jobs-greenhouse",
+            "title": "Find software engineer jobs on Greenhouse job boards",
+            "description": "Search every company on Greenhouse for software engineer jobs at once, with the company, location, pay when shown, posting date and link, newest first.",
+            "input": {
+                "searchTerms": ["software engineer"],
+                "maxJobs": 100
+            },
+            "seoTitle": "Software Engineer Jobs on Greenhouse Job Boards",
+            "seoDescription": "Every software engineer job on Greenhouse job boards, newest first, with company, location, pay and link. One search across every company.",
+            "inputSchemaFields": ["searchTerms", "location", "workType", "postedWithin", "maxJobs"],
+            "datasetView": "jobs"
+        },
+        {
+            "name": "ai-engineer-jobs-greenhouse",
+            "title": "Find AI and machine learning engineer jobs on Greenhouse",
+            "description": "Search every company on Greenhouse for AI engineer and machine learning engineer jobs at once, newest first, with the company, location, pay when shown, posting date and link.",
+            "input": {
+                "searchTerms": ["ai engineer", "machine learning engineer"],
+                "maxJobs": 100
+            },
+            "seoTitle": "AI and Machine Learning Engineer Jobs on Greenhouse",
+            "seoDescription": "AI engineer and machine learning engineer jobs from every company on Greenhouse, newest first, with company, location, pay and link. No login needed.",
+            "inputSchemaFields": ["searchTerms", "location", "workType", "postedWithin", "maxJobs"],
+            "datasetView": "jobs"
+        },
+        {
+            "name": "sales-jobs-europe-greenhouse",
+            "title": "Find sales jobs in Europe on Greenhouse job boards",
+            "description": "Get the newest sales and account executive jobs in Europe from every company on Greenhouse, including jobs posted for EMEA and jobs open worldwide, with the company, pay when shown and link.",
+            "input": {
+                "searchTerms": ["sales", "account executive"],
+                "location": ["Europe"],
+                "maxJobs": 100
+            },
+            "seoTitle": "Sales Jobs in Europe on Greenhouse Job Boards",
+            "seoDescription": "Sales and account executive jobs in Europe from every company on Greenhouse, newest first, with company, pay and link. No login or API key.",
+            "inputSchemaFields": ["searchTerms", "location", "workType", "postedWithin", "maxJobs"],
+            "datasetView": "jobs"
+        },
+        {
+            "name": "greenhouse-jobs-with-pay-and-descriptions",
+            "title": "Get Greenhouse jobs with pay, descriptions and department",
+            "description": "Get the newest jobs on Greenhouse with full details: the description as text and HTML, pay as numbers with its currency, the department, the company's reference number and the job type when it is stated. Ready for a job board or an AI agent.",
+            "input": {
+                "includeDetails": true,
+                "maxJobs": 100
+            },
+            "seoTitle": "Greenhouse Jobs With Pay, Descriptions and Department",
+            "seoDescription": "Newest Greenhouse jobs with the full description, pay as numbers, department and reference number. Clean JSON for a job board or an AI agent.",
+            "inputSchemaFields": ["searchTerms", "location", "postedWithin", "maxJobs", "includeDetails"],
+            "datasetView": "details"
+        },
+        {
+            "name": "anthropic-jobs-greenhouse",
+            "title": "Get every open Anthropic job with pay",
+            "description": "Get every open job at Anthropic from its Greenhouse job board, live, with the location, pay range, work type, posting date and link. Anthropic publishes pay on most of its jobs.",
+            "input": {
+                "companies": ["Anthropic"],
+                "maxJobs": 0
+            },
+            "seoTitle": "Anthropic Jobs API: Every Open Role With Pay",
+            "seoDescription": "Every open Anthropic job, read live from its Greenhouse job board, with location, pay range, work type and link. No login or API key.",
+            "inputSchemaFields": ["searchTerms", "location", "companies", "maxJobs"],
+            "datasetView": "jobs"
+        },
+        {
+            "name": "check-greenhouse-job-links",
+            "title": "Check whether Greenhouse job links are still open",
+            "description": "Paste Greenhouse job links and each comes back open, closed or not found, with the job's details when it is open. Handy for cleaning dead links out of a job board or a spreadsheet.",
+            "input": {
+                "jobUrls": ["https://job-boards.greenhouse.io/gitlab/jobs/8638232002"]
+            },
+            "seoTitle": "Check if Greenhouse Job Links Are Still Open",
+            "seoDescription": "Paste Greenhouse job links and see which are open, closed or gone. Clean dead links out of a job board or a spreadsheet, with no login or API key.",
+            "inputSchemaFields": ["jobUrls"],
+            "datasetView": "jobs"
+        }
+    ]
+}

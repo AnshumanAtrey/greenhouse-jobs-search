@@ -1,0 +1,404 @@
+{
+    "actorSpecification": 1,
+    "name": "greenhouse-jobs-search",
+    "title": "Greenhouse Jobs Scraper & API - All Companies, Last 24 Hours",
+    "description": "Greenhouse jobs scraper and API for every company on boards.greenhouse.io, searched live by job title, location, remote, job type and posting date, newest first. 8,378 job boards, 216,000+ open jobs, pay on 22% of them, no Greenhouse API key. The site:boards.greenhouse.io dork done at the source.",
+    "version": "1.0",
+    "buildTag": "latest",
+    "categories": [
+        "JOBS",
+        "LEAD_GENERATION",
+        "OPEN_SOURCE"
+    ],
+    "input": "./INPUT_SCHEMA.json",
+    "output": "./output_schema.json",
+    "dockerfile": "../Dockerfile",
+    "readme": "../README.md",
+    "minMemoryMbytes": 512,
+    "maxMemoryMbytes": 4096,
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "Greenhouse jobs",
+            "description": "One row per job, newest first: title, company, locations, work type, job type, pay, posting date, deadline and links; with details on, also the description, department, the company's reference number and pay as numbers. The run summary is the OUTPUT record, not a row.",
+            "fields": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Job title (title)",
+                        "description": "The job title as the company wrote it on Greenhouse.",
+                        "example": "Principal Software Development Engineer"
+                    },
+                    "company": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Company name (company)",
+                        "description": "The company, as its Greenhouse job board names it.",
+                        "example": "Zscaler"
+                    },
+                    "location": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Main location (location)",
+                        "description": "The job's first place, as the company typed it. Greenhouse keeps locations as text with no country field, so many US jobs read only City, ST.",
+                        "example": "San Jose, California, USA"
+                    },
+                    "otherLocations": {
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "title": "Other locations (otherLocations)",
+                        "description": "Every other place the company listed for the job.",
+                        "example": [
+                            "Denver, Colorado, USA",
+                            "New York, New York, USA"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "workType": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Remote or onsite (workType)",
+                        "description": "remote, hybrid or onsite, from the company's own job fields (such as Workplace Type), else from words such as Remote in the location or title. Empty when neither says, which is most jobs.",
+                        "example": "remote"
+                    },
+                    "employmentType": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Job type (employmentType)",
+                        "description": "full-time, part-time, contract, intern or temporary, from the company's own job fields such as Employment Type. Empty when the company states none.",
+                        "example": "full-time"
+                    },
+                    "department": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Hiring department (department)",
+                        "description": "The department the job is in. Filled with details on or when descriptions are searched; empty in plain rows.",
+                        "example": "Enablement"
+                    },
+                    "salary": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Pay summary (salary)",
+                        "description": "The pay ranges the company publishes, as currency and amounts; several pay zones are joined with a semicolon. Greenhouse gives no period, and hourly and yearly amounts both occur. Empty when no pay is shown.",
+                        "example": "USD 185,500 - 265,000"
+                    },
+                    "postedAt": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Posted on (postedAt)",
+                        "description": "When the company first published the job, exact to the second, in UTC. A later edit does not change it.",
+                        "example": "2026-11-02T16:30:41Z"
+                    },
+                    "expiresAt": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Apply by (expiresAt)",
+                        "description": "The application deadline, in UTC, when the company set one. Most jobs have none.",
+                        "example": "2026-12-01T08:00:00Z"
+                    },
+                    "jobUrl": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Job link (jobUrl)",
+                        "description": "The job's page: on Greenhouse, or on the company's own career site when its Greenhouse jobs link there.",
+                        "example": "https://job-boards.greenhouse.io/zscaler/jobs/5271597007"
+                    },
+                    "applyUrl": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Apply link (applyUrl)",
+                        "description": "Where to apply: the job's page, which holds the application form. Empty for a checked link that is closed or not found.",
+                        "example": "https://job-boards.greenhouse.io/zscaler/jobs/5271597007"
+                    },
+                    "status": {
+                        "type": "string",
+                        "title": "Still open? (status)",
+                        "description": "open for every search result (read live during the run). For a checked link: open, closed (Greenhouse no longer lists the job, or never had that ID) or not found (no such Greenhouse job board).",
+                        "example": "open"
+                    },
+                    "platform": {
+                        "type": "string",
+                        "title": "Job platform (platform)",
+                        "description": "The ATS the job came from: always greenhouse here.",
+                        "example": "greenhouse"
+                    },
+                    "companySlug": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Board name (companySlug)",
+                        "description": "The Greenhouse job board: the name in its address, as in zscaler for job-boards.greenhouse.io/zscaler. Capitals do not matter.",
+                        "example": "zscaler"
+                    },
+                    "companyWebsite": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Career site (companyWebsite)",
+                        "description": "The company's own career site, for companies whose Greenhouse jobs link there. Empty when the jobs are shown on Greenhouse.",
+                        "example": "https://navan.com"
+                    },
+                    "jobId": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Job ID (jobId)",
+                        "description": "Greenhouse's ID of the job, the number in gh_jid= links.",
+                        "example": "5271597007"
+                    },
+                    "checkedAt": {
+                        "type": "string",
+                        "title": "Checked at (checkedAt)",
+                        "description": "When the run read the boards, in UTC.",
+                        "example": "2026-11-02T17:32:49+00:00"
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Job description (description)",
+                        "description": "The job description as plain text, with details on.",
+                        "example": "GitLab is the intelligent orchestration platform for DevSecOps."
+                    },
+                    "descriptionHtml": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Description as HTML (descriptionHtml)",
+                        "description": "The job description as the company wrote it in HTML, with details on.",
+                        "example": "<div class=\"content-intro\"><p>GitLab is the intelligent orchestration platform for DevSecOps."
+                    },
+                    "reference": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Reference number (reference)",
+                        "description": "The company's own number for the opening (Greenhouse's requisition ID), as the company typed it, with details on.",
+                        "example": "6682"
+                    },
+                    "salaryMin": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "title": "Lowest pay (salaryMin)",
+                        "description": "With details on: the lowest pay as a number, in the currency of the first pay range. Empty when the company shows no pay.",
+                        "example": 139200
+                    },
+                    "salaryMax": {
+                        "type": [
+                            "number",
+                            "null"
+                        ],
+                        "title": "Highest pay (salaryMax)",
+                        "description": "With details on: the highest pay as a number, in the currency of the first pay range.",
+                        "example": 235200
+                    },
+                    "salaryCurrency": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "title": "Pay currency (salaryCurrency)",
+                        "description": "With details on: the currency code of the pay numbers.",
+                        "example": "USD"
+                    }
+                }
+            },
+            "views": {
+                "jobs": {
+                    "title": "Jobs",
+                    "description": "One row per job: what it is, where, remote or not, the pay and when it was first published, with its link.",
+                    "transformation": {
+                        "fields": [
+                            "title",
+                            "company",
+                            "location",
+                            "workType",
+                            "salary",
+                            "postedAt",
+                            "jobUrl",
+                            "status"
+                        ]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "title": {
+                                "label": "Job title (title)",
+                                "format": "text"
+                            },
+                            "company": {
+                                "label": "Company name (company)",
+                                "format": "text"
+                            },
+                            "location": {
+                                "label": "Main location (location)",
+                                "format": "text"
+                            },
+                            "workType": {
+                                "label": "Remote or onsite (workType)",
+                                "format": "text"
+                            },
+                            "salary": {
+                                "label": "Pay summary (salary)",
+                                "format": "text"
+                            },
+                            "postedAt": {
+                                "label": "Posted on (postedAt)",
+                                "format": "date"
+                            },
+                            "jobUrl": {
+                                "label": "Job link (jobUrl)",
+                                "format": "link"
+                            },
+                            "status": {
+                                "label": "Still open? (status)",
+                                "format": "text"
+                            }
+                        }
+                    }
+                },
+                "details": {
+                    "title": "Details",
+                    "description": "The description, job type, department, reference number, pay as numbers, deadline and every other field of each job.",
+                    "transformation": {
+                        "fields": [
+                            "title",
+                            "company",
+                            "description",
+                            "employmentType",
+                            "department",
+                            "salaryMin",
+                            "salaryMax",
+                            "salaryCurrency",
+                            "reference",
+                            "otherLocations",
+                            "expiresAt",
+                            "applyUrl",
+                            "companySlug",
+                            "companyWebsite",
+                            "jobId",
+                            "checkedAt"
+                        ]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "title": {
+                                "label": "Job title (title)",
+                                "format": "text"
+                            },
+                            "company": {
+                                "label": "Company name (company)",
+                                "format": "text"
+                            },
+                            "description": {
+                                "label": "Job description (description)",
+                                "format": "text"
+                            },
+                            "employmentType": {
+                                "label": "Job type (employmentType)",
+                                "format": "text"
+                            },
+                            "department": {
+                                "label": "Hiring department (department)",
+                                "format": "text"
+                            },
+                            "salaryMin": {
+                                "label": "Lowest pay (salaryMin)",
+                                "format": "number"
+                            },
+                            "salaryMax": {
+                                "label": "Highest pay (salaryMax)",
+                                "format": "number"
+                            },
+                            "salaryCurrency": {
+                                "label": "Pay currency (salaryCurrency)",
+                                "format": "text"
+                            },
+                            "reference": {
+                                "label": "Reference number (reference)",
+                                "format": "text"
+                            },
+                            "otherLocations": {
+                                "label": "Other locations (otherLocations)",
+                                "format": "array"
+                            },
+                            "expiresAt": {
+                                "label": "Apply by (expiresAt)",
+                                "format": "date"
+                            },
+                            "applyUrl": {
+                                "label": "Apply link (applyUrl)",
+                                "format": "link"
+                            },
+                            "companySlug": {
+                                "label": "Board name (companySlug)",
+                                "format": "text"
+                            },
+                            "companyWebsite": {
+                                "label": "Career site (companyWebsite)",
+                                "format": "link"
+                            },
+                            "jobId": {
+                                "label": "Job ID (jobId)",
+                                "format": "text"
+                            },
+                            "checkedAt": {
+                                "label": "Checked at (checkedAt)",
+                                "format": "date"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "keyValueStore": {
+            "actorKeyValueStoreSchemaVersion": 1,
+            "title": "Run summary",
+            "description": "The OUTPUT record: how many job boards were read and matched, how many jobs matched and were saved, the checked links, the notes about how the input was read and the settings used.",
+            "collections": {
+                "summary": {
+                    "title": "Run summary (OUTPUT)",
+                    "description": "Status, message, counts for the job boards and jobs, checked links, boards that could not be read, notes and settings.",
+                    "key": "OUTPUT"
+                }
+            }
+        }
+    }
+}
