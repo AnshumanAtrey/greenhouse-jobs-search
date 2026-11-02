@@ -8,14 +8,14 @@
     "tasks": [
         {
             "name": "greenhouse-jobs-last-24-hours",
-            "title": "Find every Greenhouse job posted in the last 24 hours",
-            "description": "Get every job that companies on Greenhouse first published in the last day, newest first, with the company, location, pay when shown, and link. An edit to an old job does not count as new. Schedule it daily for a fresh feed of jobs.",
+            "title": "Find the newest Greenhouse jobs posted in the last 24 hours",
+            "description": "Get the 100 newest jobs that companies on Greenhouse first published in the last day, with the company, location, pay when shown, and link. An edit to an old job does not count as new. Set Number of jobs to 0 to get every one, and schedule it daily for a fresh feed.",
             "input": {
                 "postedWithin": "24 hours",
                 "maxJobs": 100
             },
             "seoTitle": "New Greenhouse Jobs in the Last 24 Hours",
-            "seoDescription": "Every job first published on Greenhouse job boards in the last day, newest first, with company, location, pay and link. Run it daily for a fresh feed.",
+            "seoDescription": "The newest jobs first published on Greenhouse job boards in the last day, with company, location, pay and link. Run it daily for a fresh feed.",
             "inputSchemaFields": ["searchTerms", "location", "workType", "postedWithin", "maxJobs"],
             "datasetView": "jobs"
         },
@@ -41,7 +41,7 @@
                 "maxJobs": 100
             },
             "seoTitle": "Software Engineer Jobs on Greenhouse Job Boards",
-            "seoDescription": "Every software engineer job on Greenhouse job boards, newest first, with company, location, pay and link. One search across every company.",
+            "seoDescription": "The newest software engineer jobs on Greenhouse job boards, with company, location, pay and link. One search across every company.",
             "inputSchemaFields": ["searchTerms", "location", "workType", "postedWithin", "maxJobs"],
             "datasetView": "jobs"
         },
@@ -74,14 +74,14 @@
         },
         {
             "name": "greenhouse-jobs-with-pay-and-descriptions",
-            "title": "Get Greenhouse jobs with pay, descriptions and department",
-            "description": "Get the newest jobs on Greenhouse with full details: the description as text and HTML, pay as numbers with its currency, the department, the company's reference number and the job type when it is stated. Ready for a job board or an AI agent.",
+            "title": "Get Greenhouse jobs with full descriptions and department",
+            "description": "Get the newest jobs on Greenhouse with full details: the description as text and HTML, the department, the company's reference number, the job type when it is stated, and pay as numbers with its currency when the company publishes it (about 1 job in 5). Ready for a job board or an AI agent.",
             "input": {
                 "includeDetails": true,
                 "maxJobs": 100
             },
-            "seoTitle": "Greenhouse Jobs With Pay, Descriptions and Department",
-            "seoDescription": "Newest Greenhouse jobs with the full description, pay as numbers, department and reference number. Clean JSON for a job board or an AI agent.",
+            "seoTitle": "Greenhouse Jobs With Full Descriptions and Department",
+            "seoDescription": "Newest Greenhouse jobs with the full description, department and reference number, plus pay as numbers where the company publishes it. Clean JSON.",
             "inputSchemaFields": ["searchTerms", "location", "postedWithin", "maxJobs", "includeDetails"],
             "datasetView": "details"
         },

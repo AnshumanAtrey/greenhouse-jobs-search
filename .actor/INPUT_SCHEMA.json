@@ -1,6 +1,6 @@
 {
     "title": "Greenhouse Jobs Search",
-    "description": "Type a job title and press Start: you get the newest matching jobs from every company on Greenhouse (8,378 job boards, 216,000+ open jobs). Every other field is optional. Press Start with the form empty for the newest jobs of every kind.",
+    "description": "Type a job title and press Start: you get the newest matching jobs from every company on Greenhouse (8,357 job boards, 216,000+ open jobs). Every other field is optional. Press Start with the form empty for the newest jobs of every kind.",
     "type": "object",
     "schemaVersion": 1,
     "properties": {
@@ -32,7 +32,7 @@
             "title": "Remote or onsite (workType)",
             "type": "array",
             "editor": "select",
-            "description": "Pick remote, hybrid or onsite, or several. Leave it empty for all of them. Greenhouse has no work type of its own: it comes from the company's own job fields, or from words such as Remote in the location or title, and a job that says neither is left out once you pick one. Typed words such as wfh work too.",
+            "description": "Pick remote, hybrid or onsite, or several. Leave it empty for all of them. Greenhouse has no work type of its own: it comes from the company's own job fields, else from Remote, Hybrid or On-site in the location, or Remote or Hybrid in the title, and a job that says none is left out once you pick one. Typed words such as wfh work too.",
             "items": {
                 "type": "string",
                 "enumSuggestedValues": [
@@ -140,7 +140,7 @@
             "title": "Match descriptions (searchDescriptions)",
             "type": "boolean",
             "editor": "checkbox",
-            "description": "Tick to match your keywords in the job description too, not only in the title: kubernetes then finds every job that asks for Kubernetes. Greenhouse sends descriptions only when asked, so the run downloads every description of every board: it is slower and uses up to about 1 GB of memory.",
+            "description": "Tick to match your keywords in the job description too, not only in the title: kubernetes then finds every job that asks for Kubernetes. Greenhouse sends descriptions only when asked, so the run downloads every description of every board: it is slower and uses up to about 1.5 GB of the default 2 GB of memory.",
             "default": false,
             "nullable": true
         },

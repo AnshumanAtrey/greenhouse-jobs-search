@@ -2,7 +2,7 @@
     "actorSpecification": 1,
     "name": "greenhouse-jobs-search",
     "title": "Greenhouse Jobs Scraper & API - All Companies, Last 24 Hours",
-    "description": "Greenhouse jobs scraper and API for every company on boards.greenhouse.io, searched live by job title, location, remote, job type and posting date, newest first. 8,378 job boards, 216,000+ open jobs, pay on 22% of them, no Greenhouse API key. The site:boards.greenhouse.io dork done at the source.",
+    "description": "Greenhouse jobs scraper and API for every company on boards.greenhouse.io, searched live by job title, location, remote, job type and posting date, newest first. 8,357 job boards, 216,000+ open jobs, salary on 22% of them, no Greenhouse API key. The site:boards.greenhouse.io dork done at the source.",
     "version": "1.0",
     "buildTag": "latest",
     "categories": [
@@ -14,7 +14,7 @@
     "output": "./output_schema.json",
     "dockerfile": "../Dockerfile",
     "readme": "../README.md",
-    "minMemoryMbytes": 512,
+    "minMemoryMbytes": 1024,
     "maxMemoryMbytes": 4096,
     "storages": {
         "dataset": {
@@ -72,7 +72,7 @@
                             "null"
                         ],
                         "title": "Remote or onsite (workType)",
-                        "description": "remote, hybrid or onsite, from the company's own job fields (such as Workplace Type), else from words such as Remote in the location or title. Empty when neither says, which is most jobs.",
+                        "description": "remote, hybrid or onsite, from the company's own job fields (such as Workplace Type), else from Remote, Hybrid or On-site in the location, or Remote or Hybrid in the title. Empty when none says, which is most jobs.",
                         "example": "remote"
                     },
                     "employmentType": {
@@ -90,7 +90,7 @@
                             "null"
                         ],
                         "title": "Hiring department (department)",
-                        "description": "The department the job is in. Filled with details on or when descriptions are searched; empty in plain rows.",
+                        "description": "The department the job is in. Filled with details on, for checked links and when descriptions are searched; empty in other search rows.",
                         "example": "Enablement"
                     },
                     "salary": {
@@ -116,7 +116,7 @@
                             "string",
                             "null"
                         ],
-                        "title": "Apply by (expiresAt)",
+                        "title": "Closes on (expiresAt)",
                         "description": "The application deadline, in UTC, when the company set one. Most jobs have none.",
                         "example": "2026-12-01T08:00:00Z"
                     },
@@ -206,7 +206,7 @@
                             "string",
                             "null"
                         ],
-                        "title": "Reference number (reference)",
+                        "title": "Company's reference (reference)",
                         "description": "The company's own number for the opening (Greenhouse's requisition ID), as the company typed it, with details on.",
                         "example": "6682"
                     },
@@ -352,7 +352,7 @@
                                 "format": "text"
                             },
                             "reference": {
-                                "label": "Reference number (reference)",
+                                "label": "Company's reference (reference)",
                                 "format": "text"
                             },
                             "otherLocations": {
@@ -360,7 +360,7 @@
                                 "format": "array"
                             },
                             "expiresAt": {
-                                "label": "Apply by (expiresAt)",
+                                "label": "Closes on (expiresAt)",
                                 "format": "date"
                             },
                             "applyUrl": {

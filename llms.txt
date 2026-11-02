@@ -4,14 +4,14 @@
 
 ## Summary
 
-Greenhouse Jobs Search is an Apify actor that searches every company's job board on Greenhouse (boards.greenhouse.io and job-boards.greenhouse.io) at once and returns one row per job, newest first: title, company, location, remote or onsite, job type, pay, first-published date, deadline and link. It covers 8,378 job boards of 8,338 companies, which held 216,829 open jobs at 7,226 companies on 2026-11-02, at employers such as SpaceX, Anduril, Databricks, Stripe, Anthropic, Cloudflare, Datadog and GitLab. It reads Greenhouse's public Job Board API live at run time, with no login and no API key. 22% of the jobs publish pay, and the pay comes with every row.
+Greenhouse Jobs Search is an Apify actor that searches every company's job board on Greenhouse (boards.greenhouse.io and job-boards.greenhouse.io) at once and returns one row per job, newest first: title, company, location, remote or onsite, job type, pay, first-published date, deadline and link. It covers 8,357 job boards of 8,317 companies, which held 216,033 open jobs at 7,201 companies on 2026-11-02, at employers such as SpaceX, Anduril, Databricks, Stripe, Anthropic, Cloudflare, Datadog and GitLab. It reads Greenhouse's public Job Board API live at run time, with no login and no API key. 22% of the jobs publish pay, and the pay comes with every row.
 
 Store: https://apify.com/anshumanatrey/greenhouse-jobs-search
 Source: https://github.com/AnshumanAtrey/greenhouse-jobs-search
 
 ## Key features
 
-- Every job board at once, with no list of companies needed, read live rather than from a stored copy.
+- All 8,357 job boards on the list at once, with no company names needed, read live rather than from a stored copy (at most about 85% of hiring boards; others by name or link).
 - Pay on the plain row when the company publishes it: every pay zone, in each currency, with no period, because Greenhouse stores none.
 - One keyword is enough; an empty form returns the newest jobs of every kind.
 - Newest first by the date the company first published the job: an edit to an old job does not make it new.
@@ -23,7 +23,7 @@ Source: https://github.com/AnshumanAtrey/greenhouse-jobs-search
 
 - Job titles to find (searchTerms): one per line; a job matches when its title has every word.
 - Where the job is (location): city, state, country or region.
-- Remote or onsite (workType): remote, hybrid or onsite, from the company's own job fields or the words in the location and title.
+- Remote or onsite (workType): remote, hybrid or onsite, from the company's own job fields, else from Remote, Hybrid or On-site in the location, or Remote or Hybrid in the title.
 - Posted in the last (postedWithin): 24 hours, 3 days, 7 days, 30 days, any time, or your own period.
 - Number of jobs (maxJobs): 100 by default, 0 for every match.
 - Full details (includeDetails): adds the description, the department, the reference number and pay as numbers with its currency.
@@ -47,7 +47,7 @@ Typical costs (Free and Starter price):
 - 100 newest jobs: $0.18
 - 100 jobs with full details: $0.19
 - 1,000 jobs: $1.80
-- Every job on the list, 216,829 on 2026-11-02: $390.29
+- Every job on the list, 216,033 on 2026-11-02: $388.86
 
 ## When to use
 
@@ -61,7 +61,7 @@ Typical costs (Free and Starter price):
 
 - The user needs the pay period: Greenhouse does not store one.
 - The user needs a country filter that is complete for the United States: many US jobs give only a city and state.
-- The user needs work type or job type on every job: Greenhouse has them only when a company fills its own fields.
+- The user needs work type or job type on every job: Greenhouse has them only when a company states them, in its own fields or, for work type, in the location or title (about 1 job in 5).
 - The user needs jobs from companies that are not on Greenhouse: use workday-job-search, ashby-jobs-search or a multi-ATS actor.
 
 ## Sample input
@@ -81,32 +81,32 @@ From a local run of the engine on 2026-11-02, searching every board for software
 
 ```json
 {
-  "title": "Principal Software Development Engineer",
-  "company": "Zscaler",
-  "location": "San Jose, California, USA",
+  "title": "Staff Software Engineer, Tech Foundations",
+  "company": "Airbnb",
+  "location": "United States",
   "otherLocations": [],
-  "workType": null,
-  "employmentType": "full-time",
+  "workType": "remote",
+  "employmentType": null,
   "department": null,
-  "salary": "USD 185,500 - 265,000",
-  "postedAt": "2026-11-02T16:30:41Z",
+  "salary": "USD 212,000 - 265,000",
+  "postedAt": "2026-11-02T19:03:07Z",
   "expiresAt": null,
-  "jobUrl": "https://job-boards.greenhouse.io/zscaler/jobs/5271597007",
-  "applyUrl": "https://job-boards.greenhouse.io/zscaler/jobs/5271597007",
+  "jobUrl": "https://careers.airbnb.com/positions/8334372?gh_jid=8334372",
+  "applyUrl": "https://careers.airbnb.com/positions/8334372?gh_jid=8334372",
   "status": "open",
   "platform": "greenhouse",
-  "companySlug": "zscaler",
-  "companyWebsite": null,
-  "jobId": "5271597007",
-  "checkedAt": "2026-11-02T17:32:49+00:00"
+  "companySlug": "airbnb",
+  "companyWebsite": "https://careers.airbnb.com",
+  "jobId": "8334372",
+  "checkedAt": "2026-11-02T21:11:31+00:00"
 }
 ```
 
 ## Differentiators vs alternatives
 
 - vs fantastic-jobs/greenhouse-jobs-api ($0.002 per job, $0.0012 on Scale and above): AI fields and LinkedIn company data from a stored database; this actor costs less per job on the Free and Starter plans and reads Greenhouse live.
-- vs yugenox/ats-jobs-search ($0.002 per job): also live, and it covers Lever and Ashby too; this actor costs less per job and searches its 8,378 Greenhouse boards.
-- vs bovi/greenhouse-lever-ashby-job-scraper ($0.0015 per job): cheaper per job, but it needs the companies named; this actor searches every company at once.
+- vs yugenox/ats-jobs-search ($0.002 per job): also live, and it covers Lever and Ashby too; this actor costs less per job and searches its 8,357 Greenhouse boards.
+- vs bovi/greenhouse-lever-ashby-job-scraper ($0.0015 per job): cheaper per job, but it reads only the companies you name or its four curated preset lists; this actor searches all 8,357 boards on its list at once.
 
 ## Documentation
 

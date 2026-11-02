@@ -6,7 +6,7 @@ Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job boa
 
 ## What does it do?
 
-- **Searches 8,378 Greenhouse job boards of 8,338 companies at once.** On 2026-11-02 they held 216,829 open jobs at 7,226 companies, at employers such as SpaceX, Anduril, Databricks, Stripe, Anthropic, Cloudflare, Datadog, Coinbase, GitLab, Airbnb, Reddit and Figma.
+- **Searches 8,357 Greenhouse job boards of 8,317 companies at once.** On 2026-11-02 they held 216,033 open jobs at 7,201 companies, at employers such as SpaceX, Anduril, Databricks, Stripe, Anthropic, Cloudflare, Datadog, Coinbase, GitLab, Airbnb, Reddit and Figma.
 - **Pay on the plain row.** When a company publishes pay, 22% of the jobs, it comes with every row at no extra price, every pay zone included.
 - **One keyword is enough.** Type a job title and press Start. Leave the form empty for the newest jobs of every kind.
 - **Newest first, read live.** Every job comes from Greenhouse at the moment of your run, sorted by the date the company first published it.
@@ -15,9 +15,9 @@ Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job boa
 
 ## How is it different from other Greenhouse scrapers?
 
-- **Every company, read live.** Greenhouse publishes no list of its customers, so a live reader normally needs a board name or link from you, and most actors that search every company read a stored copy. This one carries a list of 8,378 boards built from public job APIs, Common Crawl, the Wayback Machine and GitHub lists, and reads all of them at the moment of your run. Of the 13 most used actors that cover Greenhouse (the table below), 4 need board names or links, 8 search a stored copy, and one other reads live: yugenox/ats-jobs-search, across Greenhouse, Lever and Ashby.
-- **The real posting date.** Greenhouse keeps two dates for a job: when it was first published and when it was last edited, and most jobs are edited long after they go up. In the 24 hours before 14:25 UTC on 2026-11-02, 952 jobs were first published, while 6,692 carried an edit from that day, so a last-24-hours filter on the edit date lists about seven times the jobs that are really new. This actor uses the first-published date, the one Greenhouse's own board pages use for their New tag (1,482 of 1,482 jobs checked).
-- **Every pay range.** Companies that pay by place publish one range per zone or country, and the row keeps all of them, in each currency (1,993 jobs show more than one).
+- **Every company, read live.** Greenhouse publishes no list of its customers, so a live reader normally needs a board name or link from you, and most actors that search every company read a stored copy. This one carries a list of 8,357 boards built from public job APIs, Common Crawl, the Wayback Machine and GitHub lists, and reads all of them at the moment of your run. Of the 13 most used actors that cover Greenhouse (the table below), 4 need board names, links or a curated preset list, 8 search a stored copy, and one other reads live: yugenox/ats-jobs-search, across Greenhouse, Lever and Ashby.
+- **The real posting date.** Greenhouse keeps two dates for a job: when it was first published and when it was last edited, and most jobs are edited long after they go up. In the 24 hours before 14:25 UTC on 2026-11-02, 952 jobs were first published, while 6,692 carried an edit from that day, so a last-24-hours filter on the edit date lists five to seven times the jobs that are really new (5.6 times in a sample of 2,000 boards at 18:29 UTC the same day). This actor uses the first-published date, the one Greenhouse's own board pages use for their New tag (1,482 of 1,482 jobs checked).
+- **Every pay range.** Companies that pay by place publish one range per zone or country, and the row keeps all of them, in each currency (1,986 jobs show more than one).
 - **Links from anywhere on Greenhouse.** Old and new board addresses, the EU boards, embed links, the API's own links and the career pages of companies on the list with `?gh_jid=` all read as the same job.
 - **A failed read costs nothing.** You pay per delivered row.
 
@@ -44,8 +44,8 @@ On paid Apify plans these are 10% less on Scale ($0.00162 and $0.00171) and 20% 
 | 100 newest jobs | $0.18 |
 | 100 jobs with full details | $0.19 |
 | 1,000 jobs | $1.80 |
-| Every open Anthropic job, 680 on 2026-11-02 | $1.22 |
-| Every job on the list, 216,829 on 2026-11-02 | $390.29 |
+| Every open Anthropic job, 677 on 2026-11-02 | $1.22 |
+| Every job on the list, 216,033 on 2026-11-02 | $388.86 |
 
 Apify's free $5 monthly credit covers about 2,800 jobs. Number of jobs (`maxJobs`) sets the most a run can cost, and a run stops at its spending limit with a message saying so.
 
@@ -68,9 +68,9 @@ Every actor on the Apify Store that names Greenhouse in its title, slug or descr
 | glitchbound/ats-jobs-scraper | 63 | $0.003 | $0.00005 | Company names or domains |
 | jobspipe/jobspipe-job-search | 61 | $0.00196 | none | Keyword, from its daily index of 30+ job boards |
 | jtpalms/ats-jobs-index | 60 | $0.003 | $0.00005 | Keyword, from its index refreshed twice a day |
-| This actor | new | $0.0018, $0.0019 with details | none | One keyword, all 8,378 boards, live |
+| This actor | new | $0.0018, $0.0019 with details | none | One keyword, all 8,357 boards, live |
 
-Where others are cheaper: bovi costs $0.0015 a job when you already know the companies, and on Scale and Business plans fantastic-jobs/greenhouse-jobs-api costs $0.0012 a job, less than this actor's $0.00162 and $0.00144. Where others do more: the database actors add fields extracted by AI and LinkedIn company data, and the multi-ATS ones cover many platforms in one run.
+Where others are cheaper: bovi costs $0.0015 a job, and a little less on paid plans, when you already know the companies or use its curated preset lists. On paid plans several drop below this actor's $0.00162 on Scale and $0.00144 on Business: fantastic-jobs/greenhouse-jobs-api costs $0.0012 on both, bytepulselabs/greenhouse-job-scraper $0.0016 and $0.0014 (and $0.0018 on Starter, the same as here), jobo.world/ats-jobs-api $0.0013 on Business, and fantastic-jobs/career-site-job-listing-feed $0.0012 and $0.0008 plus a $0.001 start fee. Where others do more: the database actors add fields extracted by AI and LinkedIn company data, and the multi-ATS ones cover many platforms in one run.
 
 ## Which inputs does it take?
 
@@ -80,7 +80,7 @@ Nothing is required. Type a job title and press Start, or press Start with the f
 |---|---|
 | Job titles to find (`searchTerms`) | One per line. A job matches when its title has every word: frontend also finds Front-End. A pasted Google dork or Greenhouse link works too |
 | Where the job is (`location`) | A city, state, country or region: London, Germany, EMEA, LatAm, TX. Worldwide finds jobs open everywhere, and Remote asks for remote jobs |
-| Remote or onsite (`workType`) | remote, hybrid or onsite, from the company's own job fields or the words in the location and title |
+| Remote or onsite (`workType`) | remote, hybrid or onsite, from the company's own job fields, else from Remote, Hybrid or On-site in the location, or Remote or Hybrid in the title |
 | Posted in the last (`postedWithin`) | 24 hours, 3 days, 7 days, 30 days, any time, or your own period such as 48 hours |
 | Number of jobs (`maxJobs`) | How many, newest first: 100 by default, 0 for every match |
 | Full details (`includeDetails`) | Adds the description as text and HTML, the department, the reference number and pay as numbers with its currency |
@@ -103,13 +103,13 @@ Example input:
 
 ## What does the output look like?
 
-One row per job, newest first. These rows are from a local run of the actor's engine on 2026-11-02, searching every board for software engineer: 8,808 jobs at 1,559 companies, the 100 newest saved. TODO_DEPLOYED: the rows, build number and seconds of the deployed build's example run go here.
+One row per job, newest first. These rows are from a local run of the actor's engine on 2026-11-02, searching every board for software engineer: 8,789 jobs at 1,554 companies, the 100 newest saved. TODO_DEPLOYED: the rows, build number and seconds of the deployed build's example run go here.
 
 | Job title (`title`) | Company name (`company`) | Main location (`location`) | Remote or onsite (`workType`) | Pay summary (`salary`) | Posted on (`postedAt`) |
 |---|---|---|---|---|---|
-| Principal Software Development Engineer | Zscaler | San Jose, California, USA |  | USD 185,500 - 265,000 | 2026-11-02 |
-| Senior Mission Software Engineer | Anduril Industries | Waltham, Massachusetts, United States |  | USD 191,000 - 254,000 | 2026-11-02 |
-| Senior Software Engineer, Accounts - Core | Fanatics Betting & Gaming | New York, NY, United States | remote | USD 144,000 - 180,000 | 2026-11-02 |
+| Senior Software Quality Assurance Engineer and Tester | Accenture Federal Services | Augusta, GA | onsite | USD 89,000 - 170,200 | 2026-11-02 |
+| Staff Software Engineer, Tech Foundations | Airbnb | United States | remote | USD 212,000 - 265,000 | 2026-11-02 |
+| Senior Software Engineer in Test, Android | Okta | Toronto, Ontario, Canada |  | CAD 118,000 - 162,000 | 2026-11-02 |
 | Staff Software Engineer, Field Engineering | Nuitée | Europe (remote) | remote |  | 2026-11-02 |
 | Senior Software Engineer, Test | Veeam Software | Pune, India | hybrid |  | 2026-11-02 |
 
@@ -117,24 +117,24 @@ One row as JSON:
 
 ```json
 {
-  "title": "Principal Software Development Engineer",
-  "company": "Zscaler",
-  "location": "San Jose, California, USA",
+  "title": "Staff Software Engineer, Tech Foundations",
+  "company": "Airbnb",
+  "location": "United States",
   "otherLocations": [],
-  "workType": null,
-  "employmentType": "full-time",
+  "workType": "remote",
+  "employmentType": null,
   "department": null,
-  "salary": "USD 185,500 - 265,000",
-  "postedAt": "2026-11-02T16:30:41Z",
+  "salary": "USD 212,000 - 265,000",
+  "postedAt": "2026-11-02T19:03:07Z",
   "expiresAt": null,
-  "jobUrl": "https://job-boards.greenhouse.io/zscaler/jobs/5271597007",
-  "applyUrl": "https://job-boards.greenhouse.io/zscaler/jobs/5271597007",
+  "jobUrl": "https://careers.airbnb.com/positions/8334372?gh_jid=8334372",
+  "applyUrl": "https://careers.airbnb.com/positions/8334372?gh_jid=8334372",
   "status": "open",
   "platform": "greenhouse",
-  "companySlug": "zscaler",
-  "companyWebsite": null,
-  "jobId": "5271597007",
-  "checkedAt": "2026-11-02T17:32:49+00:00"
+  "companySlug": "airbnb",
+  "companyWebsite": "https://careers.airbnb.com",
+  "jobId": "8334372",
+  "checkedAt": "2026-11-02T21:11:31+00:00"
 }
 ```
 
@@ -142,7 +142,7 @@ Full details fill `department` and add `description`, `descriptionHtml`, `refere
 
 ## How fast is it?
 
-TODO_DEPLOYED: the seconds of the empty form and of a keyword search at the default memory on the deployed build, with their run ids, go here. Greenhouse has no search, paging or order, so every search reads all 8,378 boards, one call each, and a keyword takes about as long as the empty form. Naming companies or checking links reads only those boards. Matching descriptions downloads every description, so it is slower.
+TODO_DEPLOYED: the seconds of the empty form and of a keyword search at the default memory on the deployed build, with their run ids, go here. Greenhouse has no search, paging or order, so every search reads all 8,357 boards, one call each, and a keyword takes about as long as the empty form. Naming companies or checking links reads only those boards. Matching descriptions downloads every description, so it is slower.
 
 ## Common questions
 
@@ -152,11 +152,11 @@ The moment the company first published the job. Greenhouse also keeps the time o
 
 ### Why does a keyword search take as long as an empty form?
 
-Greenhouse's job board API answers with every open job of one board, with no search, paging or order. So every search reads all 8,378 boards, one call each, and matches your words itself. Naming companies in Only these companies reads only those boards, which is much faster.
+Greenhouse's job board API answers with every open job of one board, with no search, paging or order. So every search reads all 8,357 boards, one call each, and matches your words itself. Naming companies in Only these companies reads only those boards, which is much faster.
 
 ### Why does United States miss some US jobs?
 
-Greenhouse keeps a job's location as the text the company typed, with no country field. On 2026-11-02, 60,004 jobs (28%) gave a US city and state code, such as Austin, TX, and no country, and United States found only 49 of them. Add the city or the state code to the places you type: TX, and Texas too. Two-letter codes that are also countries, such as CA, IN and GA, find both the state and the country (Canada, India, Gabon).
+Greenhouse keeps a job's location as the text the company typed, with no country field. On 2026-11-02, 59,614 jobs (28%) gave a US city and state code, such as Austin, TX, and no country, and United States found only 47 of them. Add the city or the state code to the places you type: TX, and Texas too. Two-letter codes that are also countries, such as CA, IN and GA, find both the state and the country (Canada, India, Gabon).
 
 ### Why do some jobs show several pay ranges?
 
@@ -164,7 +164,7 @@ Companies that pay by location publish one range per zone or country, and the ro
 
 ### How does it find every company?
 
-Greenhouse has no public list of its customers, so the list is built the way the `site:boards.greenhouse.io` dork works, from the web's own memory: freehire's public job API, Common Crawl's index, the Wayback Machine, and public company and job lists on GitHub gave 39,688 candidate names, each checked live with Greenhouse's API. 8,378 boards answer, 7,249 of them with open jobs. An estimate from how often the sources overlap puts the hiring boards on Greenhouse at 8,510 or more, so the list holds at most about 85% of them. To search a company that is not on the list, paste its link or type its name into Only these companies.
+Greenhouse has no public list of its customers, so the list is built the way the `site:boards.greenhouse.io` dork works, from the web's own memory: freehire's public job API, Common Crawl's index, the Wayback Machine, and public company and job lists on GitHub gave 15,747 candidate names, and 23,941 names from other job platforms' company lists were tried as well. 32,663 of the 39,688 were checked live with Greenhouse's API; the other 7,025 guessed names were refused while Greenhouse blocked the address, and 54 of them checked later were all missing. 8,357 boards answer, 7,233 of them with open jobs, after 21 sandbox and test boards were left out. An estimate from how often the sources overlap puts the hiring boards on Greenhouse at 8,477 or more, so the list holds at most about 85% of them. To search a company that is not on the list, paste its link or type its name into Only these companies.
 
 ### Does it need a login or an API key?
 
@@ -196,14 +196,15 @@ It reads public job postings. You are responsible for how you use the data, incl
 ## Limitations
 
 - Locations are free text with no country field: 28% of jobs give only a US city and state, which a United States filter misses (see above).
-- Work type and job type exist only when a company fills them in its own job fields; remote also comes from words such as Remote in the location or title. On 2026-11-02, 15.9% of jobs had a work type and 17.2% a job type, and a filter on either leaves out the rest.
+- Work type and job type exist only when a company states them: in its own job fields, or for work type in the location (Remote, Hybrid, On-site) or the title (Remote, Hybrid). On 2026-11-02, 18.9% of jobs had a work type and 18.0% a job type, and a filter on either leaves out the rest.
 - Pay is on 22% of jobs, has no period, and several zones are joined in one text.
-- The department, reference number and description come only with full details, which reads each saved job once more, or with a description search.
+- The department comes with full details, a checked link or a description search; the reference number and the description come only with full details, which reads each saved job once more.
 - Greenhouse answers a closed job and a job ID that never existed the same way, so both come back closed.
-- Company career-site links (`?gh_jid=`) are read for the 991 companies on the list whose jobs link to their own site; other career sites and grnh.se short links are not.
+- Company career-site links (`?gh_jid=`) are read for the 990 companies on the list whose jobs link to their own site; other career sites and grnh.se short links are not.
 - Every search reads every board, so a keyword takes about as long as the empty form.
-- Greenhouse blocks an address that makes too many calls for a while. If it refuses the run's address, the run waits up to 3 minutes per board for the block to lift and lists the boards it could not read in the `OUTPUT` record; when no board could be read, the run fails with that reason.
-- A job a company posts twice at the same place is delivered once (7,480 such copies on 2026-11-02).
+- Greenhouse blocks an address that makes too many calls for a while. If it refuses the run's address, the run waits up to 3 minutes per board for the block to lift, says in its message how many boards could not be read and lists them in the `OUTPUT` record; when no board could be read, the run fails with that reason.
+- A job a company posts twice at the same place is delivered once (7,477 such copies on 2026-11-02).
+- 45 boards are named as a company's internal or referral-only board (Coupang Internal, Referrals Only), meant for its own staff or for referred candidates: their 1,203 jobs on 2026-11-02 come back like any other.
 - Titles and descriptions come in the company's own language, most of them (95%) in English.
 - The list of boards was built on 2026-11-02. A company that joined later is searched only when you name it.
 
