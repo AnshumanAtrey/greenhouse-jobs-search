@@ -163,9 +163,6 @@
             "editor": "stringList",
             "description": "Paste Greenhouse job links to check whether they are still open, one per line, instead of searching. Each link comes back open with the job, closed, or not found. Links on boards.greenhouse.io, job-boards.greenhouse.io, the EU boards and embed links work, and so do company career pages with ?gh_jid= for companies on our list.",
             "placeholderValue": "https://job-boards.greenhouse.io/gitlab/jobs/8638232002",
-            "example": [
-                "https://job-boards.greenhouse.io/gitlab/jobs/8638232002"
-            ],
             "default": [],
             "sectionCaption": "Check job links",
             "nullable": true
