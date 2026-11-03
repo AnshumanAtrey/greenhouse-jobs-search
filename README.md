@@ -38,7 +38,7 @@ Pay per event: $1.80 per 1,000 jobs, or $1.90 per 1,000 with full details, plus 
 | Job with details | $0.0019 | One saved job with full details on |
 | Run start | $0.01 per GB of memory | Charged by Apify when a run starts: once up to 1 GB and once more for each extra GB, so $0.01 at the default 1 GB |
 
-On paid Apify plans the job prices are 10% less on Scale ($0.00162 and $0.00171) and 20% less on Business and above ($0.00144 and $0.00152); the run start stays $0.01 per GB. The Store page shows that Business price, from $1.44 per 1,000 jobs, and leaves the run start out.
+Greenhouse Jobs Scraper's Apify Store header, "from $1.44 / 1,000 jobs", shows the lowest discount-tier price: the GOLD price. FREE and BRONZE users (Apify's Free and Starter plans) pay the base price in the table, $0.0018 a job and $0.0019 with details; SILVER (Scale) pays 10% less, $0.00162 and $0.00171; GOLD (Business) and above pay 20% less, $0.00144 and $0.00152. The run start is a flat fee on every plan, $0.01 per GB of memory ($0.01 at the default 1 GB), and the header never shows it.
 
 | Run (Free and Starter price, default memory) | Cost |
 |---|---|
@@ -149,7 +149,7 @@ About 3 minutes at the default 1 GB of memory, and under 2 minutes at 2 GB. On t
 
 ### Which posting date does it use?
 
-The moment the company first published the job. Greenhouse also keeps the time of the last edit, which moves whenever a job is touched: on 2026-11-02, 70% of open jobs had been edited more than a week after they went up. This actor sorts and filters by the first-published date, the date Greenhouse's own board pages use for their New tag, so last 24 hours means new jobs, not old ones that were edited.
+Greenhouse Jobs Scraper uses the moment the company first published the job, for the posting date, the newest-first order and the Posted in the last filter. Greenhouse also keeps the time of the last edit, which moves whenever a job is touched: on 2026-11-02, 70% of open jobs had been edited more than a week after they went up. The first-published date is the one Greenhouse's own board pages use for their New tag, so last 24 hours means new jobs, not old ones that were edited.
 
 ### Why does a keyword search take as long as an empty form?
 
@@ -161,35 +161,35 @@ Greenhouse keeps a job's location as the text the company typed, with no country
 
 ### Why do some jobs show several pay ranges?
 
-Companies that pay by location publish one range per zone or country, and the row keeps all of them, joined with a semicolon: EUR 70,000 - 110,000; EUR 85,000 - 110,000; PLN 250,000 - 480,000 is one real row. Greenhouse stores amounts and a currency with no period, and hourly and yearly pay both occur, so read the amount with the job. With full details on, `salaryMin` and `salaryMax` are the lowest and highest amounts in the first range's currency.
+A Greenhouse job shows several pay ranges when its company pays by location: the company publishes one range per zone or country, and the job's row keeps all of them, joined with a semicolon. EUR 70,000 - 110,000; EUR 85,000 - 110,000; PLN 250,000 - 480,000 is one real row. Greenhouse stores amounts and a currency with no period, and hourly and yearly pay both occur, so read the amount with the job. With full details on, `salaryMin` and `salaryMax` are the lowest and highest amounts in the first range's currency.
 
 ### How does it find every company?
 
-Greenhouse has no public list of its customers, so the list is built the way the `site:boards.greenhouse.io` dork works, from the web's own memory: freehire's public job API, Common Crawl's index, the Wayback Machine, and public company and job lists on GitHub gave 15,747 candidate names, and 23,941 names from other job platforms' company lists were tried as well. 32,663 of the 39,688 were checked live with Greenhouse's API; the other 7,025 guessed names were refused while Greenhouse blocked the address, and 54 of them checked later were all missing. 8,357 boards answered on 2026-11-02, 7,233 of them with open jobs, after 21 sandbox and test boards were left out. An estimate from how often the sources overlap puts the hiring boards on Greenhouse at 8,477 or more, so the list holds at most about 85% of them. To search a company that is not on the list, paste its link or type its name into Only these companies.
+Greenhouse has no public list of its customers, so Greenhouse Jobs Scraper's list of job boards is built the way the `site:boards.greenhouse.io` dork works, from the web's own memory: freehire's public job API, Common Crawl's index, the Wayback Machine, and public company and job lists on GitHub gave 15,747 candidate names, and 23,941 names from other job platforms' company lists were tried as well. 32,663 of the 39,688 were checked live with Greenhouse's API; the other 7,025 guessed names were refused while Greenhouse blocked the address, and 54 of them checked later were all missing. 8,357 boards answered on 2026-11-02, 7,233 of them with open jobs, after 21 sandbox and test boards were left out. An estimate from how often the sources overlap puts the hiring boards on Greenhouse at 8,477 or more, so the list holds at most about 85% of them. To search a company that is not on the list, paste its link or type its name into Only these companies.
 
 ### Does it need a login or an API key?
 
-No. Greenhouse's Job Board API is public: it serves what each company's job board shows any visitor. Greenhouse's other APIs need a customer's own key and read only that customer's data. You need only an Apify account.
+Greenhouse Jobs Scraper needs no login and no Greenhouse API key, because Greenhouse's Job Board API is public: it serves what each company's job board shows any visitor. Greenhouse's other APIs need a customer's own key and read only that customer's data. You need only an Apify account.
 
 ### Does it work on Apify's free plan?
 
-Yes. Apify's free $5 monthly credit pays for about 2,600 jobs in runs of 100, at $0.19 a run with the run start.
+Greenhouse Jobs Scraper works on Apify's free plan, which pays the base price: $0.0018 a job plus the $0.01 run start at the default 1 GB. The free $5 monthly credit pays for about 2,600 jobs in runs of 100, at $0.19 a run.
 
 ### How often should I run it?
 
-Once a day keeps a feed fresh: set Posted in the last (`postedWithin`) to 24 hours and Number of jobs (`maxJobs`) to 0 to get every job first published that day, 952 in the 24 hours before 14:25 UTC on 2026-11-02, about $1.72 a run. Set the run up under Schedules in Apify Console, and match rows on `jobId` to skip jobs you already have.
+Running Greenhouse Jobs Scraper once a day keeps a job feed fresh: set Posted in the last (`postedWithin`) to 24 hours and Number of jobs (`maxJobs`) to 0 to get every job first published that day, 952 in the 24 hours before 14:25 UTC on 2026-11-02, about $1.72 a run. Set the run up under Schedules in Apify Console, and match rows on `jobId` to skip jobs you already have.
 
 ### How do I get every job of one company?
 
-Type its name in Only these companies (`companies`), such as Anthropic, or paste its Greenhouse link, and set Number of jobs (`maxJobs`) to 0. Only that board is read, so the run is much faster than a search of every board: every open Anthropic job, 677 on 2026-11-02, comes to $1.23.
+To get every open job of one company with Greenhouse Jobs Scraper, type the company's name in Only these companies (`companies`), such as Anthropic, or paste its Greenhouse link, and set Number of jobs (`maxJobs`) to 0. Only that board is read, so the run is much faster than a search of every board: every open Anthropic job, 677 on 2026-11-02, comes to $1.23.
 
 ### How do I check a list of job links?
 
-Paste the links into Job links to check (`jobUrls`), one per line, instead of searching. Links on boards.greenhouse.io, job-boards.greenhouse.io, the EU boards, embed links and the career pages of companies on the list with `?gh_jid=` all work. Each link comes back as one row, open with the job's fields, or closed or not found with its link, so 10 links come to $0.028 with the run start.
+Greenhouse Jobs Scraper checks whether Greenhouse job links are still open when you paste them into Job links to check (`jobUrls`), one per line, instead of searching. Links on boards.greenhouse.io, job-boards.greenhouse.io, the EU boards, embed links and the career pages of companies on the list with `?gh_jid=` all work. Each link comes back as one row, open with the job's fields, or closed or not found with its link, so 10 links come to $0.028 with the run start.
 
 ### How do I call it from the API, Python, JavaScript, n8n or an AI agent?
 
-Each way uses your Apify token (Apify Console, Settings, API & Integrations) and takes the input as JSON, with the field names above.
+Greenhouse Jobs Scraper runs from the Apify API, Python, JavaScript, n8n, Make or an AI agent over MCP. Each way uses your Apify token (Apify Console, Settings, API & Integrations) and takes the input as JSON keyed by the field names, such as `searchTerms` and `maxJobs`.
 
 **API.** One call runs the actor and returns its rows. Apify stops that wait after 300 seconds: a search of every board takes about 3 minutes, inside the limit, but for every job (`maxJobs` 0) or a description search, use a client below, which waits until the run ends.
 
@@ -207,7 +207,7 @@ from apify_client import ApifyClient
 
 client = ApifyClient("<YOUR_APIFY_TOKEN>")
 run = client.actor("anshumanatrey/greenhouse-jobs-search").call(run_input={"searchTerms": ["software engineer"]})
-for row in client.dataset(run.default_dataset_id).iterate_items()  # apify-client 3+; on 2.x use run["defaultDatasetId"]:
+for row in client.dataset(run.default_dataset_id).iterate_items():  # apify-client 3+; on 2.x use run["defaultDatasetId"]
     print(row["title"], row["company"], row["location"], row["salary"], row["jobUrl"])
 ```
 
@@ -228,11 +228,11 @@ for (const row of items) console.log(row.title, row.company, row.location, row.s
 
 ### Am I charged for closed jobs?
 
-A search returns open jobs only. A pasted link that turns out closed or not found is one Job row, because it was checked and answered.
+Greenhouse Jobs Scraper charges for a closed job only when you paste its link to check. A search returns open jobs only, and a pasted link that turns out closed or not found is one Job row, because it was checked and answered.
 
 ### Is it legal to use?
 
-It reads public job postings. You are responsible for how you use the data, including each site's terms and the privacy laws that apply to you.
+Greenhouse Jobs Scraper reads public job postings. You are responsible for how you use the data, including each site's terms and the privacy laws that apply to you.
 
 ## Limitations
 
