@@ -30,7 +30,7 @@ Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job boa
 
 ## How much does it cost to scrape Greenhouse jobs?
 
-Pay per event. Platform usage is included, and there is no monthly fee.
+Pay per event: $1.80 per 1,000 jobs, or $1.90 per 1,000 with full details, plus $0.01 per run at the default 1 GB of memory. Apify's free $5 monthly credit covers about 2,600 jobs in runs of 100. Platform usage is included, and there is no monthly fee.
 
 | Event | Price | When it is charged |
 |---|---|---|
@@ -38,7 +38,7 @@ Pay per event. Platform usage is included, and there is no monthly fee.
 | Job with details | $0.0019 | One saved job with full details on |
 | Run start | $0.01 per GB of memory | Charged by Apify when a run starts: once up to 1 GB and once more for each extra GB, so $0.01 at the default 1 GB |
 
-On paid Apify plans the job prices are 10% less on Scale ($0.00162 and $0.00171) and 20% less on Business and above ($0.00144 and $0.00152); the run start stays $0.01 per GB.
+On paid Apify plans the job prices are 10% less on Scale ($0.00162 and $0.00171) and 20% less on Business and above ($0.00144 and $0.00152); the run start stays $0.01 per GB. The Store page shows that Business price, from $1.44 per 1,000 jobs, and leaves the run start out.
 
 | Run (Free and Starter price, default memory) | Cost |
 |---|---|
@@ -48,7 +48,7 @@ On paid Apify plans the job prices are 10% less on Scale ($0.00162 and $0.00171)
 | Every open Anthropic job, 677 on 2026-11-02 | $1.23 |
 | Every job on the list, 216,033 on 2026-11-02 | $388.87 |
 
-Why a run start: Greenhouse has no search, so every search reads all 8,357 job boards whatever it finds, and the run start pays for that read. The price on the Store page is per job and leaves the run start out. Apify's free $5 monthly credit covers about 2,600 jobs in runs of 100. Number of jobs (`maxJobs`) and the run start set the most a run can cost, and a run stops at its spending limit with a message saying so.
+Why a run start: Greenhouse has no search, so every search reads all 8,357 job boards whatever it finds, and the run start pays for that read. Number of jobs (`maxJobs`) and the run start set the most a run can cost, and a run stops at its spending limit with a message saying so.
 
 ## How does the price compare with other Greenhouse scrapers?
 
@@ -171,9 +171,36 @@ Greenhouse has no public list of its customers, so the list is built the way the
 
 No. Greenhouse's Job Board API is public: it serves what each company's job board shows any visitor. Greenhouse's other APIs need a customer's own key and read only that customer's data. You need only an Apify account.
 
-### How do I run it from Python or an AI agent?
+### Does it work on Apify's free plan?
 
-Through the Apify API, with your Apify token:
+Yes. Apify's free $5 monthly credit pays for about 2,600 jobs in runs of 100, at $0.19 a run with the run start.
+
+### How often should I run it?
+
+Once a day keeps a feed fresh: set Posted in the last (`postedWithin`) to 24 hours and Number of jobs (`maxJobs`) to 0 to get every job first published that day, 952 in the 24 hours before 14:25 UTC on 2026-11-02, about $1.72 a run. Set the run up under Schedules in Apify Console, and match rows on `jobId` to skip jobs you already have.
+
+### How do I get every job of one company?
+
+Type its name in Only these companies (`companies`), such as Anthropic, or paste its Greenhouse link, and set Number of jobs (`maxJobs`) to 0. Only that board is read, so the run is much faster than a search of every board: every open Anthropic job, 677 on 2026-11-02, comes to $1.23.
+
+### How do I check a list of job links?
+
+Paste the links into Job links to check (`jobUrls`), one per line, instead of searching. Links on boards.greenhouse.io, job-boards.greenhouse.io, the EU boards, embed links and the career pages of companies on the list with `?gh_jid=` all work. Each link comes back as one row, open with the job's fields, or closed or not found with its link, so 10 links come to $0.028 with the run start.
+
+### How do I call it from the API, Python, JavaScript, n8n or an AI agent?
+
+Each way uses your Apify token (Apify Console, Settings, API & Integrations) and takes the input as JSON, with the field names above.
+
+**API.** One call runs the actor and returns its rows. Apify stops that wait after 300 seconds: a search of every board takes about 3 minutes, inside the limit, but for every job (`maxJobs` 0) or a description search, use a client below, which waits until the run ends.
+
+```bash
+curl -X POST "https://api.apify.com/v2/acts/anshumanatrey~greenhouse-jobs-search/run-sync-get-dataset-items" \
+  -H "Authorization: Bearer <YOUR_APIFY_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"searchTerms": ["software engineer"]}'
+```
+
+**Python** (`pip install apify-client`):
 
 ```python
 from apify_client import ApifyClient
@@ -184,7 +211,20 @@ for row in client.dataset(run["defaultDatasetId"]).iterate_items():
     print(row["title"], row["company"], row["location"], row["salary"], row["jobUrl"])
 ```
 
-AI agents can call it through the Apify MCP server at https://mcp.apify.com, and n8n and Make have Apify nodes.
+**JavaScript** (`npm install apify-client`):
+
+```js
+import { ApifyClient } from 'apify-client';
+
+const client = new ApifyClient({ token: '<YOUR_APIFY_TOKEN>' });
+const run = await client.actor('anshumanatrey/greenhouse-jobs-search').call({ searchTerms: ['software engineer'] });
+const { items } = await client.dataset(run.defaultDatasetId).listItems();
+for (const row of items) console.log(row.title, row.company, row.location, row.salary, row.jobUrl);
+```
+
+**n8n and Make.** In n8n, add the Apify node, pick Run an Actor and get dataset, choose this actor and paste the input JSON: the rows come out as n8n items. In Make, the Apify app's Run an Actor and Get Dataset Items modules do the same.
+
+**AI agents (MCP).** Add `https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search` to your MCP client and sign in with Apify, or send `Authorization: Bearer <YOUR_APIFY_TOKEN>`. The agent gets this actor as a tool and sees every input field by its JSON key.
 
 ### Am I charged for closed jobs?
 
@@ -215,16 +255,17 @@ Built and maintained by **Anshuman Atrey** ([@AnshumanAtrey](https://github.com/
 
 ## Sibling actors
 
-| Actor | Use case |
+| Actor | What it searches |
 |---|---|
-| [ashby-jobs-search](https://apify.com/anshumanatrey/ashby-jobs-search) | Every job on every Ashby board, searched live |
-| [workday-job-search](https://apify.com/anshumanatrey/workday-job-search) | Every job at 1,688 Workday employers, searched live |
-| [cornerstone-jobs-search](https://apify.com/anshumanatrey/cornerstone-jobs-search) | Every job on every Cornerstone career site |
-| [deel-jobs-search](https://apify.com/anshumanatrey/deel-jobs-search) | Every job on every Deel ATS career page, with pay |
-| [lever-jobs-search](https://apify.com/anshumanatrey/lever-jobs-search) | Jobs on Lever job sites, searched live |
-| [smartrecruiters-jobs-search](https://apify.com/anshumanatrey/smartrecruiters-jobs-search) | Jobs on SmartRecruiters career pages, searched live |
-| [workable-job-search](https://apify.com/anshumanatrey/workable-job-search) | Jobs from every company on Workable, from Workable's hourly feed |
-| [linkedin-harvester](https://apify.com/anshumanatrey/linkedin-harvester) | Email to LinkedIn profile, for the people behind a company |
+| [Ashby Jobs Scraper](https://apify.com/anshumanatrey/ashby-jobs-search) | Jobs from every company on Ashby (jobs.ashbyhq.com), searched live |
+| [Cornerstone Jobs Scraper](https://apify.com/anshumanatrey/cornerstone-jobs-search) | Jobs from every company on Cornerstone (csod.com), searched live |
+| [Workday Jobs Scraper](https://apify.com/anshumanatrey/workday-job-search) | Jobs from every company on Workday (myworkdayjobs.com), searched live |
+| [Deel Jobs Scraper](https://apify.com/anshumanatrey/deel-jobs-search) | Jobs from every company on Deel ATS (jobs.deel.com), with pay |
+| [SmartRecruiters Jobs Scraper](https://apify.com/anshumanatrey/smartrecruiters-jobs-search) | Jobs from 2,900+ companies on SmartRecruiters, searched live |
+| [Workable Jobs Scraper](https://apify.com/anshumanatrey/workable-job-search) | Jobs from every company on Workable, in one search |
+| [Lever Jobs Scraper](https://apify.com/anshumanatrey/lever-jobs-search) | Jobs from 2,300+ companies on Lever (jobs.lever.co), searched live |
+
+For the people behind a company: [LinkedIn Profile Finder](https://apify.com/anshumanatrey/linkedin-harvester) turns an email into a public LinkedIn profile.
 
 ## Documentation
 

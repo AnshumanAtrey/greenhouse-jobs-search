@@ -37,8 +37,8 @@ Source: https://github.com/AnshumanAtrey/greenhouse-jobs-search
 
 PAY_PER_EVENT model, platform usage included:
 
-- Job: $0.0018 per saved job, and per checked link that is closed or not found
-- Job with details: $0.0019 per saved job with full details on
+- Job: $0.0018 per saved job ($1.80 per 1,000), and per checked link that is closed or not found
+- Job with details: $0.0019 per saved job with full details on ($1.90 per 1,000)
 - Run start: $0.01 per GB of memory, charged by Apify when a run starts, so $0.01 at the default 1 GB
 
 On paid Apify plans the job prices are 10% less on Scale ($0.00162 and $0.00171) and 20% less on Business and above ($0.00144 and $0.00152); the run start stays $0.01 per GB.
@@ -51,6 +51,17 @@ Typical costs (Free and Starter price, default memory):
 - Every job on the list, 216,033 on 2026-11-02: $388.87
 
 Greenhouse has no search, so every search reads all 8,357 job boards whatever it finds; the run start pays for that read. Apify's free $5 monthly credit covers about 2,600 jobs in runs of 100.
+
+## Speed
+
+About 3 minutes at the default 1 GB for a search of every board: 185 s for software engineer and 216 s for the empty form on Apify on 2026-11-03. At 2 GB the same search took 119 s, with a $0.02 run start. Naming companies or checking links reads only those boards.
+
+## How to call it
+
+- Apify API: POST https://api.apify.com/v2/acts/anshumanatrey~greenhouse-jobs-search/run-sync-get-dataset-items with the input as JSON and the header Authorization: Bearer <APIFY_TOKEN>. It returns the rows and waits up to 300 seconds, so start bigger runs (every job, a description search) with a client.
+- Python and JavaScript: the apify-client package, actor anshumanatrey/greenhouse-jobs-search.
+- n8n: the Apify node, Run an Actor and get dataset. Make: the Apify app's Run an Actor and Get Dataset Items modules.
+- MCP: https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search, signed in with Apify or with Authorization: Bearer <APIFY_TOKEN>.
 
 ## When to use
 
@@ -65,7 +76,7 @@ Greenhouse has no search, so every search reads all 8,357 job boards whatever it
 - The user needs the pay period: Greenhouse does not store one.
 - The user needs a country filter that is complete for the United States: many US jobs give only a city and state.
 - The user needs work type or job type on every job: Greenhouse has them only when a company states them, in its own fields or, for work type, in the location or title (about 1 job in 5).
-- The user needs jobs from companies that are not on Greenhouse: use workday-job-search, ashby-jobs-search or a multi-ATS actor.
+- The user needs jobs from companies that are not on Greenhouse: use the sibling actor for that platform (Sibling actors below) or a multi-ATS actor.
 - The user wants the lowest price for a few jobs per run: with the $0.01 run start, runs under 50 jobs cost less at the $0.002-a-job actors with no start fee, such as fantastic-jobs/greenhouse-jobs-api and yugenox/ats-jobs-search.
 
 ## Sample input
@@ -111,6 +122,16 @@ From the example run of the deployed build (1.0.1) on 2026-11-03, run j96er5Rmn9
 - vs fantastic-jobs/greenhouse-jobs-api ($0.002 per job, $0.0012 on Scale and above, no start fee): AI fields and LinkedIn company data from a stored database; this actor costs less per job on the Free and Starter plans, so a run of more than 50 jobs costs less here (more than 100 with full details), and it reads Greenhouse live.
 - vs yugenox/ats-jobs-search ($0.002 per job, no start fee): also live, and it covers Lever and Ashby too; this actor costs less for runs of more than 50 jobs and searches its 8,357 Greenhouse boards.
 - vs bovi/greenhouse-lever-ashby-job-scraper ($0.0015 per job): cheaper per job, but it reads only the companies you name or its four curated preset lists; this actor searches all 8,357 boards on its list at once.
+
+## Sibling actors
+
+- Ashby Jobs Scraper (https://apify.com/anshumanatrey/ashby-jobs-search): Jobs from every company on Ashby (jobs.ashbyhq.com), searched live
+- Cornerstone Jobs Scraper (https://apify.com/anshumanatrey/cornerstone-jobs-search): Jobs from every company on Cornerstone (csod.com), searched live
+- Workday Jobs Scraper (https://apify.com/anshumanatrey/workday-job-search): Jobs from every company on Workday (myworkdayjobs.com), searched live
+- Deel Jobs Scraper (https://apify.com/anshumanatrey/deel-jobs-search): Jobs from every company on Deel ATS (jobs.deel.com), with pay
+- SmartRecruiters Jobs Scraper (https://apify.com/anshumanatrey/smartrecruiters-jobs-search): Jobs from 2,900+ companies on SmartRecruiters, searched live
+- Workable Jobs Scraper (https://apify.com/anshumanatrey/workable-job-search): Jobs from every company on Workable, in one search
+- Lever Jobs Scraper (https://apify.com/anshumanatrey/lever-jobs-search): Jobs from 2,300+ companies on Lever (jobs.lever.co), searched live
 
 ## Documentation
 
