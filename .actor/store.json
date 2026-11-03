@@ -1,5 +1,6 @@
 {
-    "$comment": "Listing metadata, applied by scripts/store-metadata.mjs in CI (manager/rules/SEO.md). actorId is added after the first deploy.",
+    "$comment": "Listing metadata, applied by scripts/store-metadata.mjs in CI (manager/rules/SEO.md). actorId pins the actor the first deploy created, so CI updates it by ID and a rename of name in actor.json keeps the same actor.",
+    "actorId": "SIReCvwTdJEyT2fpe",
     "seoTitle": "Greenhouse Jobs Scraper - Every Greenhouse Job Board",
     "seoDescription": "Search every company on Greenhouse at once: job titles, salary ranges, locations, remote work and posting dates. Live, no login or Greenhouse API key.",
     "exampleRunInput": {
@@ -11,13 +12,13 @@
     "isPublic": false,
     "defaultRunOptions": {
         "build": "latest",
-        "memoryMbytes": 2048,
+        "memoryMbytes": 1024,
         "timeoutSecs": 1800
     },
-    "defaultRunOptions$comment": "TODO_DEPLOYED: measure the empty form with every default at 1024 and 2048 MB on the deployed build (seconds, usageTotalUsd, run ids) and keep the cheaper size that finishes well inside 300 s. Engine v0.4.0 on the laptop (2026-11-03, /usr/bin/time -l, MB as Apify counts them): the example input took 113 s and 22.3 s of CPU and peaked at 330 MB footprint (221 MB resident); the empty form with every default took 113 s and 26.9 s of CPU and peaked at 394 MB (314 MB resident), downloading about 24 MB. Apify gives a quarter CPU core at 1 GB and half a core at 2 GB, and the pacer holds a pass to at least 105 s, so 1 GB is the cheaper size while its pass takes less than twice the 2 GB one. 2 GB until then, for the description search: a kubernetes description search peaked at 1.53 GB at the 2 GB setting (the 100 biggest boards 10 at once) and 0.88 GB at 1 GB (3 at once); every job, maxJobs 0, peaked at 669 MB (f-final-all). minMemoryMbytes is 1024 for that.",
+    "defaultRunOptions$comment": "Default 1 GB, measured on Apify on 2026-11-03 (build 1.0.1, engine v0.4.0, unpriced): the example input took 185 s, peaked at 255 MB and used $0.0119 (run j96er5Rmn9tfQUkCt); at 2 GB the same input took 119 s, 237 MB, $0.0147 (run YSm3LERZBfd6xSvio); the empty form, the daily test, took 216 s, 278 MB, $0.0137 (run bHR94LfwZ6KKoD9gc). 1 GB gets a quarter CPU core, so a pass is slower but costs less, and at 2 GB the example would leave 89.8% margin without a start fee, under the owner's 90% at every tier. A description search reads the 100 biggest boards 3 at a time at 1 GB (0.88 GB laptop peak) and 10 at a time at 2 GB (1.53 GB laptop peak). minMemoryMbytes 1024: at 512 MB a pass would get an eighth of a core, and a maxJobs 0 run (669 MB laptop peak) would not fit.",
     "pricing": {
-        "$comment": "2026-11-02. Rule: rules/SEO.md section 16. Main competitor: fantastic-jobs/greenhouse-jobs-api, the most used actor made for Greenhouse (156 u30): $0.002 a job on FREE and BRONZE, $0.0012 on SILVER and above, no start fee, one row with the description from its own database. job is 10% under it and job-details 5% under it on FREE and BRONZE. Others: bovi $0.0015 + $0.00005 start (company slugs or preset lists), yugenox $0.002 (live keyword search, Greenhouse, Lever and Ashby), bytepulselabs $0.002 (board links), automation-lab $0.002 + $0.01 start, jobo.world $0.004 (database). No start fee: a search reads every board. On engine v0.4.0 (laptop, 2026-11-03) a pass took 113 s and moved about 24 MB in and 2 MB out, so at FREE and BRONZE rates about $0.013 of compute at 2 GB plus $0.005 of data transfer: about 10% of the $0.18 that 100 rows earn, at the edge of the 10% rule, and under it at 1 GB (TODO_DEPLOYED: usageTotalUsd). Gentle ladder per the owner's decision of 2026-10-29. apply is false for the first, private measurement deploy: the orchestrator sets the final prices and apply true after measuring a run on Apify.",
-        "apply": false,
+        "$comment": "2026-11-02, run start added 2026-11-03. Rule: rules/SEO.md section 16. Main competitor: fantastic-jobs/greenhouse-jobs-api, the most used actor made for Greenhouse (156 u30): $0.002 a job on FREE and BRONZE, $0.0012 on SILVER and above, no start fee, one row with the description from its own database. job is 10% under it and job-details 5% under it on FREE and BRONZE. Others: bovi $0.0015 + $0.00005 start (company slugs or preset lists), yugenox $0.002 (live keyword search, Greenhouse, Lever and Ashby), bytepulselabs $0.002 (board links), automation-lab $0.002 + $0.01 start, jobo.world $0.004 (database). Run start: Apify's apify-actor-start at $0.01 per GB, $0.01 at the default 1 GB, because every search reads all 8,357 boards whatever it finds: $0.0119 to $0.0137 of platform usage a run at 1 GB on Apify (runs j96er5Rmn9tfQUkCt and bHR94LfwZ6KKoD9gc, 2026-11-03), 87-88% of it compute; billed external transfer was 4.6 to 4.8 MB (under $0.001) although a run receives about 30 MB. Margin rule (owner): platform cost under 10% of developer revenue (0.8 x price) at every tier. 100 rows with the run start: example 92.2% on FREE and 93.5% on GOLD, empty form 91.0% and 92.5%. Those competitors charge no start fee, so a run under 50 jobs (100 with details) costs a little more here, which the README says. Gentle ladder per the owner's decision of 2026-10-29. apply true; isPublic stays false until the priced proof run.",
+        "apply": true,
         "pricingInfos": [
             {
                 "pricingModel": "PAY_PER_EVENT",
@@ -72,6 +73,11 @@
                                     "tieredEventPriceUsd": 0.00152
                                 }
                             }
+                        },
+                        "apify-actor-start": {
+                            "eventTitle": "Run start",
+                            "eventDescription": "Charged by Apify when a run starts: once up to 1 GB of memory and once more for each extra GB, so $0.01 at the default 1 GB. It pays for reading all of Greenhouse's 8,357 job boards, which every search does whatever it finds.",
+                            "eventPriceUsd": 0.01
                         }
                     }
                 }

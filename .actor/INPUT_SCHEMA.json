@@ -80,7 +80,7 @@
             "type": "integer",
             "editor": "number",
             "unit": "jobs",
-            "description": "Type how many jobs to get, newest first: 100 by default. Type 0 to get every matching job. Each job is one charged row, so this also sets the most a run can cost.",
+            "description": "Type how many jobs to get, newest first: 100 by default. Type 0 to get every matching job. Each job is one charged row, so this, with the run start, sets the most a run can cost.",
             "prefill": 100,
             "example": 100,
             "default": 100,
@@ -140,7 +140,7 @@
             "title": "Match descriptions (searchDescriptions)",
             "type": "boolean",
             "editor": "checkbox",
-            "description": "Tick to match your keywords in the job description too, not only in the title: kubernetes then finds every job that asks for Kubernetes. Greenhouse sends descriptions only when asked, so the run downloads every description of every board: it is slower and uses up to about 1.5 GB of the default 2 GB of memory.",
+            "description": "Tick to match your keywords in the job description too, not only in the title: kubernetes then finds every job that asks for Kubernetes. Greenhouse sends descriptions only when asked, so the run downloads every description of every board: it is slower and uses up to about 0.9 GB of the default 1 GB of memory, and 2 GB makes it faster.",
             "default": false,
             "nullable": true
         },

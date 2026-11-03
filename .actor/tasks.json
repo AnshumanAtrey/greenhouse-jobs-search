@@ -1,8 +1,8 @@
 {
-    "$comment": "Example tasks published on the Store by scripts/publish-tasks.mjs after every deploy (CI only). Each one is a search people type, with its own Google-indexed landing page and .md (manager/rules/SEO.md section 18). Limits: title 63, description 400, seoTitle 60, seoDescription 160 (154 kept), 10 per actor. inputSchemaFields must stay fields of the input schema, or the page stops showing after a build. options follow defaultRunOptions in store.json (TODO_DEPLOYED: the memory measured on Apify goes in both).",
+    "$comment": "Example tasks published on the Store by scripts/publish-tasks.mjs after every deploy (CI only). Each one is a search people type, with its own Google-indexed landing page and .md (manager/rules/SEO.md section 18). Limits: title 63, description 400, seoTitle 60, seoDescription 160 (154 kept), 10 per actor. inputSchemaFields must stay fields of the input schema, or the page stops showing after a build. options follow defaultRunOptions in store.json (1 GB, measured on Apify on 2026-11-03).",
     "options": {
         "build": "latest",
-        "memoryMbytes": 2048,
+        "memoryMbytes": 1024,
         "timeoutSecs": 1800
     },
     "tasks": [

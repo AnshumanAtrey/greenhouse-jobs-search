@@ -2,7 +2,7 @@
 
 Greenhouse jobs scraper and API: search every company's job board on Greenhouse (boards.greenhouse.io and job-boards.greenhouse.io) at once, live, and get each job's title, company, location, remote or onsite, job type, salary range, first-published date, deadline and link, newest first. Turn on full details for the description, the department, the company's reference number and pay as numbers.
 
-Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job board scraper or a daily job feed from the Apify Console, the Apify API, Python, JavaScript, n8n, Make or an AI agent, and export JSON, CSV or Excel. It is the `site:boards.greenhouse.io` Google dork done at the source, with the fields a search result cannot give you. Available as an [Apify Actor](https://apify.com/anshumanatrey/greenhouse-jobs-search). $0.0018 per job, $0.0019 with full details, no start fee, no login, no API key.
+Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job board scraper or a daily job feed from the Apify Console, the Apify API, Python, JavaScript, n8n, Make or an AI agent, and export JSON, CSV or Excel. It is the `site:boards.greenhouse.io` Google dork done at the source, with the fields a search result cannot give you. Available as an [Apify Actor](https://apify.com/anshumanatrey/greenhouse-jobs-search). $0.0018 per job, $0.0019 with full details, $0.01 per run start at the default memory, no login, no API key.
 
 ## What does it do?
 
@@ -19,7 +19,7 @@ Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job boa
 - **The real posting date.** Greenhouse keeps two dates for a job: when it was first published and when it was last edited, and most jobs are edited long after they go up. In the 24 hours before 14:25 UTC on 2026-11-02, 952 jobs were first published, while 6,692 carried an edit from that day, so a last-24-hours filter on the edit date lists five to seven times the jobs that are really new (5.6 times in a sample of 2,000 boards at 18:29 UTC the same day). This actor uses the first-published date, the one Greenhouse's own board pages use for their New tag (1,482 of 1,482 jobs checked).
 - **Every pay range.** Companies that pay by place publish one range per zone or country, and the row keeps all of them, in each currency (1,986 jobs show more than one).
 - **Links from anywhere on Greenhouse.** Old and new board addresses, the EU boards, embed links, the API's own links and the career pages of companies on the list with `?gh_jid=` all read as the same job.
-- **A failed read costs nothing.** You pay per delivered row.
+- **You pay for what you get.** One charge per delivered row, plus the run start, and a spending limit stops the run cleanly with the jobs it paid for.
 
 ## When should I use it?
 
@@ -30,24 +30,25 @@ Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job boa
 
 ## How much does it cost to scrape Greenhouse jobs?
 
-Pay per event. Platform usage is included, and there is no start fee or monthly fee.
+Pay per event. Platform usage is included, and there is no monthly fee.
 
 | Event | Price | When it is charged |
 |---|---|---|
 | Job | $0.0018 | One saved job, and one checked link that is closed or not found |
 | Job with details | $0.0019 | One saved job with full details on |
+| Run start | $0.01 per GB of memory | Charged by Apify when a run starts: once up to 1 GB and once more for each extra GB, so $0.01 at the default 1 GB |
 
-On paid Apify plans these are 10% less on Scale ($0.00162 and $0.00171) and 20% less on Business and above ($0.00144 and $0.00152).
+On paid Apify plans the job prices are 10% less on Scale ($0.00162 and $0.00171) and 20% less on Business and above ($0.00144 and $0.00152); the run start stays $0.01 per GB.
 
-| Job (Free and Starter price) | Cost |
+| Run (Free and Starter price, default memory) | Cost |
 |---|---|
-| 100 newest jobs | $0.18 |
-| 100 jobs with full details | $0.19 |
-| 1,000 jobs | $1.80 |
-| Every open Anthropic job, 677 on 2026-11-02 | $1.22 |
-| Every job on the list, 216,033 on 2026-11-02 | $388.86 |
+| 100 newest jobs | $0.19 |
+| 100 jobs with full details | $0.20 |
+| 1,000 jobs | $1.81 |
+| Every open Anthropic job, 677 on 2026-11-02 | $1.23 |
+| Every job on the list, 216,033 on 2026-11-02 | $388.87 |
 
-Apify's free $5 monthly credit covers about 2,800 jobs. Number of jobs (`maxJobs`) sets the most a run can cost, and a run stops at its spending limit with a message saying so.
+Why a run start: Greenhouse has no search, so every search reads all 8,357 job boards whatever it finds, and the run start pays for that read. The price on the Store page is per job and leaves the run start out. Apify's free $5 monthly credit covers about 2,600 jobs in runs of 100. Number of jobs (`maxJobs`) and the run start set the most a run can cost, and a run stops at its spending limit with a message saying so.
 
 ## How does the price compare with other Greenhouse scrapers?
 
@@ -68,9 +69,9 @@ Every actor on the Apify Store that names Greenhouse in its title, slug or descr
 | glitchbound/ats-jobs-scraper | 63 | $0.003 | $0.00005 | Company names or domains |
 | jobspipe/jobspipe-job-search | 61 | $0.00196 | none | Keyword, from its daily index of 30+ job boards |
 | jtpalms/ats-jobs-index | 60 | $0.003 | $0.00005 | Keyword, from its index refreshed twice a day |
-| This actor | new | $0.0018, $0.0019 with details | none | One keyword, all 8,357 boards, live |
+| This actor | new | $0.0018, $0.0019 with details | $0.01 per GB, $0.01 at 1 GB | One keyword, all 8,357 boards, live |
 
-Where others are cheaper: bovi costs $0.0015 a job, and a little less on paid plans, when you already know the companies or use its curated preset lists. On paid plans several drop below this actor's $0.00162 on Scale and $0.00144 on Business: fantastic-jobs/greenhouse-jobs-api costs $0.0012 on both, bytepulselabs/greenhouse-job-scraper $0.0016 and $0.0014 (and $0.0018 on Starter, the same as here), jobo.world/ats-jobs-api $0.0013 on Business, and fantastic-jobs/career-site-job-listing-feed $0.0012 and $0.0008 plus a $0.001 start fee. Where others do more: the database actors add fields extracted by AI and LinkedIn company data, and the multi-ATS ones cover many platforms in one run.
+Where others are cheaper: bovi costs $0.0015 a job, and a little less on paid plans, when you already know the companies or use its curated preset lists. fantastic-jobs/greenhouse-jobs-api, yugenox/ats-jobs-search and bytepulselabs/greenhouse-job-scraper cost $0.002 a job with no start fee, so on the free plan they cost less than this actor for runs under 50 jobs (under 100 with full details): 10 jobs cost $0.02 there and $0.028 here. On paid plans several drop below this actor's $0.00162 on Scale and $0.00144 on Business: fantastic-jobs/greenhouse-jobs-api costs $0.0012 on both, bytepulselabs/greenhouse-job-scraper $0.0016 and $0.0014 (and $0.0018 on Starter, the same per job as here, with no start fee), jobo.world/ats-jobs-api $0.0013 on Business, and fantastic-jobs/career-site-job-listing-feed $0.0012 and $0.0008 plus a $0.001 start fee. Where others do more: the database actors add fields extracted by AI and LinkedIn company data, and the multi-ATS ones cover many platforms in one run.
 
 ## Which inputs does it take?
 
@@ -103,7 +104,7 @@ Example input:
 
 ## What does the output look like?
 
-One row per job, newest first. These rows are from a local run of the actor's engine (v0.4.0) on 2026-11-03, searching every board for software engineer: 8,782 jobs at 1,554 companies, the 100 newest saved. TODO_DEPLOYED: the rows, build number and seconds of the deployed build's example run go here.
+One row per job, newest first. These rows are from the example run of the deployed build (1.0.1) at the default 1 GB on 2026-11-03, run j96er5Rmn9tfQUkCt: software engineer across every board, 8,784 jobs at 1,554 companies, the 100 newest saved in 185 s.
 
 | Job title (`title`) | Company name (`company`) | Main location (`location`) | Remote or onsite (`workType`) | Pay summary (`salary`) | Posted on (`postedAt`) |
 |---|---|---|---|---|---|
@@ -134,7 +135,7 @@ One row as JSON:
   "companySlug": "airbnb",
   "companyWebsite": "https://careers.airbnb.com",
   "jobId": "8334372",
-  "checkedAt": "2026-11-03T08:42:31+00:00"
+  "checkedAt": "2026-11-03T09:02:52+00:00"
 }
 ```
 
@@ -142,7 +143,7 @@ Full details fill `department` and add `description`, `descriptionHtml`, `refere
 
 ## How fast is it?
 
-TODO_DEPLOYED: the seconds of the empty form and of a keyword search at the default memory on the deployed build, with their run ids, go here. Greenhouse has no search, paging or order, so every search reads all 8,357 boards, one call each, and a keyword takes about as long as the empty form. Naming companies or checking links reads only those boards. Matching descriptions downloads every description, so it is slower.
+About 3 minutes at the default 1 GB of memory, and under 2 minutes at 2 GB. On the deployed build (1.0.1) on 2026-11-03, the empty form took 216 s at 1 GB (run bHR94LfwZ6KKoD9gc) and a search for software engineer 185 s (run j96er5Rmn9tfQUkCt); at 2 GB the same search took 119 s (run YSm3LERZBfd6xSvio), with a run start of $0.02 instead of $0.01. Greenhouse has no search, paging or order, so every search reads all 8,357 boards, one call each, and a keyword takes about as long as the empty form. Naming companies or checking links reads only those boards. Matching descriptions downloads every description, so it is slower.
 
 ## Common questions
 
@@ -201,7 +202,7 @@ It reads public job postings. You are responsible for how you use the data, incl
 - The department comes with full details, a checked link or a description search; the reference number and the description come only with full details, which reads each saved job once more.
 - Greenhouse answers a closed job and a job ID that never existed the same way, so both come back closed.
 - Company career-site links (`?gh_jid=`) are read for the 990 companies on the list whose jobs link to their own site; other career sites and grnh.se short links are not.
-- Every search reads every board, so a keyword takes about as long as the empty form.
+- Every search reads every board, so a keyword takes about as long as the empty form, and every run pays the run start.
 - Greenhouse blocks an address that makes too many calls for a while. If it refuses the run's address, the run waits up to 3 minutes per board for the block to lift, says in its message how many boards could not be read and lists them in the `OUTPUT` record; when no board could be read, the run fails with that reason.
 - A job a company posts twice at the same place is delivered once (7,477 such copies on 2026-11-02).
 - 45 boards are named as a company's internal or referral-only board (Coupang Internal, Referrals Only), meant for its own staff or for referred candidates: their 1,203 jobs on 2026-11-02 come back like any other.
