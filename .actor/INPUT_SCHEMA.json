@@ -1,6 +1,6 @@
 {
     "title": "Greenhouse Jobs Search",
-    "description": "Type a job title and press Start: you get the newest matching jobs from every company on Greenhouse (8,357 job boards, 216,000+ open jobs). Every other field is optional. Press Start with the form empty for the newest jobs of every kind.",
+    "description": "Type a job title and press Start: you get the newest matching jobs from every company on Greenhouse (8,357 job boards, 210,000+ open jobs). Every other field is optional. Press Start with the form empty for the newest jobs of every kind.",
     "type": "object",
     "schemaVersion": 1,
     "properties": {

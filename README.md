@@ -103,15 +103,15 @@ Example input:
 
 ## What does the output look like?
 
-One row per job, newest first. These rows are from a local run of the actor's engine on 2026-11-02, searching every board for software engineer: 8,789 jobs at 1,554 companies, the 100 newest saved. TODO_DEPLOYED: the rows, build number and seconds of the deployed build's example run go here.
+One row per job, newest first. These rows are from a local run of the actor's engine (v0.4.0) on 2026-11-03, searching every board for software engineer: 8,782 jobs at 1,554 companies, the 100 newest saved. TODO_DEPLOYED: the rows, build number and seconds of the deployed build's example run go here.
 
 | Job title (`title`) | Company name (`company`) | Main location (`location`) | Remote or onsite (`workType`) | Pay summary (`salary`) | Posted on (`postedAt`) |
 |---|---|---|---|---|---|
+| Staff Software Engineer, Fullstack (Card Experiences) | Affirm | Remote Canada | remote |  | 2026-11-03 |
 | Senior Software Quality Assurance Engineer and Tester | Accenture Federal Services | Augusta, GA | onsite | USD 89,000 - 170,200 | 2026-11-02 |
 | Staff Software Engineer, Tech Foundations | Airbnb | United States | remote | USD 212,000 - 265,000 | 2026-11-02 |
 | Senior Software Engineer in Test, Android | Okta | Toronto, Ontario, Canada |  | CAD 118,000 - 162,000 | 2026-11-02 |
-| Staff Software Engineer, Field Engineering | Nuitée | Europe (remote) | remote |  | 2026-11-02 |
-| Senior Software Engineer, Test | Veeam Software | Pune, India | hybrid |  | 2026-11-02 |
+| Software Engineer, Compute | Vercel | Hybrid - San Francisco | hybrid |  | 2026-11-02 |
 
 One row as JSON:
 
@@ -134,7 +134,7 @@ One row as JSON:
   "companySlug": "airbnb",
   "companyWebsite": "https://careers.airbnb.com",
   "jobId": "8334372",
-  "checkedAt": "2026-11-02T21:11:31+00:00"
+  "checkedAt": "2026-11-03T08:42:31+00:00"
 }
 ```
 
@@ -156,7 +156,7 @@ Greenhouse's job board API answers with every open job of one board, with no sea
 
 ### Why does United States miss some US jobs?
 
-Greenhouse keeps a job's location as the text the company typed, with no country field. On 2026-11-02, 59,614 jobs (28%) gave a US city and state code, such as Austin, TX, and no country, and United States found only 47 of them. Add the city or the state code to the places you type: TX, and Texas too. Two-letter codes that are also countries, such as CA, IN and GA, find both the state and the country (Canada, India, Gabon).
+Greenhouse keeps a job's location as the text the company typed, with no country field. On 2026-11-02, 59,614 jobs (28%) gave a US city and state code, such as Austin, TX, and no country, and United States found only 47 of them. Add the city or the state code to the places you type: TX also finds Texas. Two-letter codes that are also countries, such as CA, IN and GA, find both the state and the country (Canada, India, Gabon).
 
 ### Why do some jobs show several pay ranges?
 
@@ -164,7 +164,7 @@ Companies that pay by location publish one range per zone or country, and the ro
 
 ### How does it find every company?
 
-Greenhouse has no public list of its customers, so the list is built the way the `site:boards.greenhouse.io` dork works, from the web's own memory: freehire's public job API, Common Crawl's index, the Wayback Machine, and public company and job lists on GitHub gave 15,747 candidate names, and 23,941 names from other job platforms' company lists were tried as well. 32,663 of the 39,688 were checked live with Greenhouse's API; the other 7,025 guessed names were refused while Greenhouse blocked the address, and 54 of them checked later were all missing. 8,357 boards answer, 7,233 of them with open jobs, after 21 sandbox and test boards were left out. An estimate from how often the sources overlap puts the hiring boards on Greenhouse at 8,477 or more, so the list holds at most about 85% of them. To search a company that is not on the list, paste its link or type its name into Only these companies.
+Greenhouse has no public list of its customers, so the list is built the way the `site:boards.greenhouse.io` dork works, from the web's own memory: freehire's public job API, Common Crawl's index, the Wayback Machine, and public company and job lists on GitHub gave 15,747 candidate names, and 23,941 names from other job platforms' company lists were tried as well. 32,663 of the 39,688 were checked live with Greenhouse's API; the other 7,025 guessed names were refused while Greenhouse blocked the address, and 54 of them checked later were all missing. 8,357 boards answered on 2026-11-02, 7,233 of them with open jobs, after 21 sandbox and test boards were left out. An estimate from how often the sources overlap puts the hiring boards on Greenhouse at 8,477 or more, so the list holds at most about 85% of them. To search a company that is not on the list, paste its link or type its name into Only these companies.
 
 ### Does it need a login or an API key?
 
@@ -220,9 +220,9 @@ Built and maintained by **Anshuman Atrey** ([@AnshumanAtrey](https://github.com/
 | [workday-job-search](https://apify.com/anshumanatrey/workday-job-search) | Every job at 1,688 Workday employers, searched live |
 | [cornerstone-jobs-search](https://apify.com/anshumanatrey/cornerstone-jobs-search) | Every job on every Cornerstone career site |
 | [deel-jobs-search](https://apify.com/anshumanatrey/deel-jobs-search) | Every job on every Deel ATS career page, with pay |
-| [lever-jobs-search](https://apify.com/anshumanatrey/lever-jobs-search) | Every job on every Lever job site, searched live |
-| [smartrecruiters-jobs-search](https://apify.com/anshumanatrey/smartrecruiters-jobs-search) | Every job on every SmartRecruiters career page, searched live |
-| [workable-jobs-search](https://apify.com/anshumanatrey/workable-jobs-search) | Every job on every Workable job board, searched live |
+| [lever-jobs-search](https://apify.com/anshumanatrey/lever-jobs-search) | Jobs on Lever job sites, searched live |
+| [smartrecruiters-jobs-search](https://apify.com/anshumanatrey/smartrecruiters-jobs-search) | Jobs on SmartRecruiters career pages, searched live |
+| [workable-job-search](https://apify.com/anshumanatrey/workable-job-search) | Jobs from every company on Workable, from Workable's hourly feed |
 | [linkedin-harvester](https://apify.com/anshumanatrey/linkedin-harvester) | Email to LinkedIn profile, for the people behind a company |
 
 ## Documentation
@@ -233,4 +233,4 @@ Built and maintained by **Anshuman Atrey** ([@AnshumanAtrey](https://github.com/
 
 ## Last updated
 
-2026-11-02 (version 1.0)
+2026-11-03 (version 1.0)

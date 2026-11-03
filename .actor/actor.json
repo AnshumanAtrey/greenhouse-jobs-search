@@ -2,7 +2,7 @@
     "actorSpecification": 1,
     "name": "greenhouse-jobs-search",
     "title": "Greenhouse Jobs Scraper & API - All Companies, Last 24 Hours",
-    "description": "Greenhouse jobs scraper and API for every company on boards.greenhouse.io, searched live by job title, location, remote, job type and posting date, newest first. 8,357 job boards, 216,000+ open jobs, salary on 22% of them, no Greenhouse API key. The site:boards.greenhouse.io dork done at the source.",
+    "description": "Greenhouse jobs scraper and API for every company on boards.greenhouse.io, searched live by job title, location, remote, job type and posting date, newest first. 8,357 job boards, 210,000+ open jobs, salary on 22% of them, no Greenhouse API key. The site:boards.greenhouse.io dork done at the source.",
     "version": "1.0",
     "buildTag": "latest",
     "categories": [
