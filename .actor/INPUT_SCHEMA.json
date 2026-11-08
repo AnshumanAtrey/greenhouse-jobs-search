@@ -20,7 +20,7 @@
             "title": "Where the job is (location)",
             "type": "array",
             "editor": "stringList",
-            "description": "Type where the jobs should be: a city, state, country or region, one per line, for example London, Germany, EMEA or LatAm. Greenhouse keeps locations as the company typed them: United States finds the jobs that name the country, and many US jobs give only a city and state, so add the city or the state code (TX) too. Worldwide finds the jobs open everywhere; Remote here asks for remote jobs. Leave it empty for anywhere.",
+            "description": "Type where the jobs should be: a city, state, country or region, one per line, for example London, Germany, EMEA or LatAm. Greenhouse keeps locations as the company typed them: United States finds the jobs that name the country, and many US jobs give only a city and state, so add the city or the state code (TX) too. Worldwide finds the jobs open everywhere; Remote alone asks for remote jobs, and next to other places narrows nothing. Leave it empty for anywhere.",
             "placeholderValue": "London",
             "example": [
                 "London"
