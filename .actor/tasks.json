@@ -1,5 +1,5 @@
 {
-    "$comment": "Example tasks published on the Store by scripts/publish-tasks.mjs after every deploy (CI only). Each one is a search people type, with its own Google-indexed landing page and .md (manager/rules/SEO.md section 18). Limits: title 63, description 400, seoTitle 60, seoDescription 160 (154 kept), 10 per actor. inputSchemaFields must stay fields of the input schema, or the page stops showing after a build. options follow defaultRunOptions in store.json (1 GB, measured on Apify on 2026-11-03).",
+    "$comment": "Example tasks published on the Store by scripts/publish-tasks.mjs after every deploy (CI only). Each one is a search people type, with its own Google-indexed landing page and .md (manager/rules/SEO.md section 18). Limits: title 63, description 400, seoTitle 60, seoDescription 160 (154 kept), 10 per actor. inputSchemaFields must stay fields of the input schema, or the page stops showing after a build. options follow defaultRunOptions in store.json (1 GB, measured on Apify on 2026-11-03). Tasks marked publish false stay saved but off the Store: the account publishes at most 100 pages across all actors, so each actor keeps 2 or more by its earnings and search traffic (2026-11-11).",
     "options": {
         "build": "latest",
         "memoryMbytes": 1024,
@@ -8,6 +8,7 @@
     "tasks": [
         {
             "name": "greenhouse-jobs-last-24-hours",
+            "publish": false,
             "title": "Find the newest Greenhouse jobs posted in the last 24 hours",
             "description": "Get the 100 newest jobs that companies on Greenhouse first published in the last day, with the company, location, pay when shown, and link. An edit to an old job does not count as new. Set Number of jobs to 0 to get every one, and schedule it daily for a fresh feed.",
             "input": {
@@ -36,6 +37,7 @@
         },
         {
             "name": "remote-jobs-on-greenhouse",
+            "publish": false,
             "title": "Find remote jobs on Greenhouse job boards",
             "description": "Get the newest remote jobs from every company on Greenhouse, with the company, location, pay when shown, posting date and link. Remote is what the company states in its own job fields, or in the location or title.",
             "input": {
@@ -67,6 +69,7 @@
         },
         {
             "name": "software-engineer-jobs-greenhouse",
+            "publish": false,
             "title": "Find software engineer jobs on Greenhouse job boards",
             "description": "Search every company on Greenhouse for software engineer jobs at once, with the company, location, pay when shown, posting date and link, newest first.",
             "input": {
@@ -97,6 +100,7 @@
         },
         {
             "name": "ai-engineer-jobs-greenhouse",
+            "publish": false,
             "title": "Find AI and machine learning engineer jobs on Greenhouse",
             "description": "Search every company on Greenhouse for AI engineer and machine learning engineer jobs at once, newest first, with the company, location, pay when shown, posting date and link.",
             "input": {
@@ -128,6 +132,7 @@
         },
         {
             "name": "sales-jobs-europe-greenhouse",
+            "publish": false,
             "title": "Find sales jobs in Europe on Greenhouse job boards",
             "description": "Get the newest sales and account executive jobs in Europe from every company on Greenhouse, including jobs posted for EMEA and jobs open worldwide, with the company, pay when shown and link.",
             "input": {
@@ -161,6 +166,7 @@
         },
         {
             "name": "greenhouse-jobs-with-pay-and-descriptions",
+            "publish": false,
             "title": "Get Greenhouse jobs with full descriptions and department",
             "description": "Get the newest jobs on Greenhouse with full details: the description as text and HTML, the department, the company's reference number, the job type when it is stated, and pay as numbers with its currency when the company publishes it (about 1 job in 5). Ready for a job board or an AI agent.",
             "input": {
