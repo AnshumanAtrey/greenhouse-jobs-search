@@ -9,6 +9,13 @@ Greenhouse Jobs Search is an Apify actor that searches every company's job board
 Store: https://apify.com/anshumanatrey/greenhouse-jobs-search
 Source: https://github.com/AnshumanAtrey/greenhouse-jobs-search
 
+## Use it from an AI assistant
+
+- Claude (claude.ai and the desktop app): https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=Greenhouse%20Jobs&connectorUrl=https%3A%2F%2Fmcp.apify.com%3Ftools%3Danshumanatrey%2Fgreenhouse-jobs-search (click Continue, sign in to Apify, Allow).
+- Claude Code: claude mcp add --transport http greenhouse-jobs-search "https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search", then /mcp to sign in to Apify.
+- Codex: codex mcp add greenhouse-jobs-search --url "https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search", then codex mcp login greenhouse-jobs-search.
+- Any other MCP client: https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search, signed in with Apify or Authorization: Bearer <APIFY_TOKEN>.
+
 ## Key features
 
 - All 8,357 job boards on the list at once, with no company names needed, read live rather than from a stored copy (at most about 85% of hiring boards; others by name or link).

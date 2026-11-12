@@ -4,6 +4,13 @@ Greenhouse jobs scraper and API: search every company's job board on Greenhouse 
 
 Use it as a Greenhouse jobs API with no Greenhouse API key, a Greenhouse job board scraper or a daily job feed from the Apify Console, the Apify API, Python, JavaScript, n8n, Make or an AI agent, and export JSON, CSV or Excel. It is the `site:boards.greenhouse.io` Google dork done at the source, with the fields a search result cannot give you. Available as an [Apify Actor](https://apify.com/anshumanatrey/greenhouse-jobs-search). $0.0018 per job, $0.0019 with full details, $0.01 per run start at the default memory, no login, no API key.
 
+**Use it from an AI assistant:**
+
+- **Claude** (claude.ai and the desktop app): [Add Greenhouse Jobs to Claude](https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=Greenhouse%20Jobs&connectorUrl=https%3A%2F%2Fmcp.apify.com%3Ftools%3Danshumanatrey%2Fgreenhouse-jobs-search), click Continue, sign in to Apify, Allow, and ask in plain words.
+- **Claude Code:** `claude mcp add --transport http greenhouse-jobs-search "https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search"`, then run `/mcp` to sign in to Apify.
+- **Codex:** `codex mcp add greenhouse-jobs-search --url "https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search"`, then `codex mcp login greenhouse-jobs-search`.
+- **Any other MCP client:** `https://mcp.apify.com?tools=anshumanatrey/greenhouse-jobs-search`, signed in with Apify or an `Authorization: Bearer <APIFY_TOKEN>` header.
+
 ## What does it do?
 
 - **Searches 8,357 Greenhouse job boards of 8,317 companies at once.** On 2026-11-02 they held 216,033 open jobs at 7,201 companies, at employers such as SpaceX, Anduril, Databricks, Stripe, Anthropic, Cloudflare, Datadog, Coinbase, GitLab, Airbnb, Reddit and Figma.
